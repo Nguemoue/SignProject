@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ShopController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,9 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::group([
     "middleware" => ["auth","verified"]
 ],function (){
-    Route::get("/acceuil",[\App\Http\Controllers\HomeController::class,"acceuil"])->name('acceuil');
     Route::get("/dashboard",[\App\Http\Controllers\HomeController::class,"dashboard"])->name("dashboard");
     Route::get("/",[\App\Http\Controllers\HomeController::class,"home"])->name("home");
+    Route::get("/category",[ShopController::class,"category"])->name("shop.category");
 });
 
 

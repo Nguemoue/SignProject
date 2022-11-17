@@ -1,7 +1,15 @@
 /node_modules
 /public/build
 /public/hot
+/public/css/
+/public/Aroma Shop-doc/
 /public/storage
+/public/scss/
+/public/vendors/
+/public/img/
+/public/styl/
+/public/mdi/
+/resources/views/aroma-master/
 /storage/*.key
 /vendor
 .env

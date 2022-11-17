@@ -1,1 +1,0 @@
-<x-navlink-component  class="border mt-4" icon="mdi-store" :link="route('unite.index')">Mon Unite</x-navlink-component>

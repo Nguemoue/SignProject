@@ -1,317 +1,437 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
-    <script src="//mozilla.github.io/pdf.js/build/pdf.js"></script>
+@extends('template')
 
-</head>
-<body>
+@section('main')
+    <!--================ Hero banner start =================-->
+    <section class="hero-banner">
+        <div class="container">
+            <div class="row no-gutters align-items-center pt-60px">
+                <div class="col-5 d-none d-sm-block">
+                    <div class="hero-banner__img">
+                        <img class="img-fluid" src="img/home/hero-banner.png" alt="">
+                    </div>
+                </div>
+                <div class="col-sm-7 col-lg-6 offset-lg-1 pl-4 pl-md-5 pl-lg-0">
+                    <div class="hero-banner__content">
+                        <h4>Shop is fun</h4>
+                        <h1>Browse Our Premium Product</h1>
+                        <p>Us which over of signs divide dominion deep fill bring they're meat beho upon own earth
+                            without morning over third. Their male dry. They are great appear whose land fly grass.
+                        </p>
+                        <a class="button button-hero" href="#">Browse Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--================ Hero banner start =================-->
 
-<div id="app">
-    <v-app>
-        <v-navigation-drawer inner app v-model="model.navigation">
-            <v-app-bar>
-                <v-toolbar-title>Menu</v-toolbar-title>
-            </v-app-bar>
-            <v-list>
-                <a href="{{route('acceuil')}}" class="btn btn-success"><span class="mdi mdi-home"></span> Acceuil</a>
-            </v-list>
-        </v-navigation-drawer>
-        <v-app-bar app>
-            <v-app-bar-nav-icon @click="model.navigation =! model.navigation"></v-app-bar-nav-icon>
-            <img src="{{asset('logo.jpg')}}" width="50" alt="">
-            <v-toolbar-title class="mx-4">
-                Signature de Fichier
-            </v-toolbar-title>
-        </v-app-bar>
-        <v-main app>
-            <v-container fluid>
-                <v-stepper v-model="e1">
-                    <v-stepper-header flat>
-                        <v-stepper-step :complete="e1 > 1" step="1">Charger le document</v-stepper-step>
+    <!--================ Hero Carousel start =================-->
+    <section class="section-margin mt-0">
+        <div class="owl-carousel owl-theme hero-carousel">
+            <div class="hero-carousel__slide">
+                <img src="img/home/hero-slide1.png" alt="" class="img-fluid">
+                <a href="#" class="hero-carousel__slideOverlay">
+                    <h3>Wireless Headphone</h3>
+                    <p>Accessories Item</p>
+                </a>
+            </div>
+            <div class="hero-carousel__slide">
+                <img src="img/home/hero-slide2.png" alt="" class="img-fluid">
+                <a href="#" class="hero-carousel__slideOverlay">
+                    <h3>Wireless Headphone</h3>
+                    <p>Accessories Item</p>
+                </a>
+            </div>
+            <div class="hero-carousel__slide">
+                <img src="img/home/hero-slide3.png" alt="" class="img-fluid">
+                <a href="#" class="hero-carousel__slideOverlay">
+                    <h3>Wireless Headphone</h3>
+                    <p>Accessories Item</p>
+                </a>
+            </div>
+        </div>
+    </section>
+    <!--================ Hero Carousel end =================-->
 
-                        <v-divider></v-divider>
-
-                        <v-stepper-step :complete="e1 > 2" step="2">Saisissez les signataires</v-stepper-step>
-
-                        <v-divider></v-divider>
-
-                        <v-stepper-step step="3" :complete="e1>3">Positionner la signature</v-stepper-step>
-                        <v-divider></v-divider>
-                        <v-stepper-step step="4">Envoyer</v-stepper-step>
-                    </v-stepper-header>
-
-                    <v-stepper-items>
-                        <v-stepper-content step="1">
-                            <a href="#" class="text-success">Charger vos Documents a faire Signes</a>
-                            <v-card class="mb-2" color="">
-                                <v-card-title>Remplissez le formulaire</v-card-title>
-                                <form action="">
-                                    <v-text-field dense v-model="nomCollecte" outlined class="mb-2" append-icon="mdi-account" name="nom"
-                                                  label="Nom de la collecte"></v-text-field>
-                                    <v-file-input dense  v-model="filePdf" clearable counter counter-size-string
-                                                  outlined prepend-icon="" show-size chips
-                                                  label="selectionner un fichier"
-                                                  prepend-inner-icon="mdi-file-pdf" accept="application/pdf">
-                                    </v-file-input>
-                                </form>
-                            </v-card>
-                            <v-btn
-                                color="primary"
-                                @click="e1 = 2"
-                            >
-                                Continue
-                            </v-btn>
-
-                            <v-btn text>Cancel</v-btn>
-                        </v-stepper-content>
-
-                        <v-stepper-content step="2">
-                            <div>
-                                <h1 class="mb-2 text-center">saisissez les signataires</h1>
-                                <div class="form">
-                                    <v-text-field dense v-model="nom" outlined label="nom" name="nom"></v-text-field>
-                                    <v-text-field dense v-model="prenom" outlined label="prenom"
-                                                  name="prenom"></v-text-field>
-                                    <v-text-field dense outlined label="email" v-model="email" name="email"></v-text-field>
-                                    <v-text-field dense outlined label="mobile" name="mobile" v-model="telephone" ></v-text-field>
-                                    <v-text-field dense outlined label="SNI" name="cni"></v-text-field>
-                                </div>
-                            </div>
-
-                            <v-btn color="success" sm @click="e1=1">precedent</v-btn>
-                            <v-btn
-                                color="primary"
-                                @click="e1 = 3"
-                            >
-                                Continue
-                            </v-btn>
-
-                        </v-stepper-content>
-
-                        <v-stepper-content step="3">
-                            <h4 class="text-center">
-                                indiquer sur chaque document ou vos correspondant doivent signer
+    <!-- ================ trending product section start ================= -->
+    <section class="section-margin calc-60px">
+        <div class="container">
+            <div class="section-intro pb-60px">
+                <p>Popular Item in the market</p>
+                <h2>Trending <span class="section-intro__style">Product</span></h2>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-lg-4 col-xl-3">
+                    <div class="card text-center card-product">
+                        <div class="card-product__img">
+                            <img class="card-img" src="img/product/product1.png" alt="">
+                            <ul class="card-product__imgOverlay">
+                                <li><button><i class="ti-search"></i></button></li>
+                                <li><button><i class="ti-shopping-cart"></i></button></li>
+                                <li><button><i class="ti-heart"></i></button></li>
+                            </ul>
+                        </div>
+                        <div class="card-body">
+                            <p>Accessories</p>
+                            <h4 class="card-product__title"><a href="single-product.html">Quartz Belt Watch</a>
                             </h4>
-                            <div class="row">
+                            <p class="card-product__price">$150.00</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 col-xl-3">
+                    <div class="card text-center card-product">
+                        <div class="card-product__img">
+                            <img class="card-img" src="img/product/product2.png" alt="">
+                            <ul class="card-product__imgOverlay">
+                                <li><button><i class="ti-search"></i></button></li>
+                                <li><button><i class="ti-shopping-cart"></i></button></li>
+                                <li><button><i class="ti-heart"></i></button></li>
+                            </ul>
+                        </div>
+                        <div class="card-body">
+                            <p>Beauty</p>
+                            <h4 class="card-product__title"><a href="single-product.html">Women Freshwash</a></h4>
+                            <p class="card-product__price">$150.00</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 col-xl-3">
+                    <div class="card text-center card-product">
+                        <div class="card-product__img">
+                            <img class="card-img" src="img/product/product3.png" alt="">
+                            <ul class="card-product__imgOverlay">
+                                <li><button><i class="ti-search"></i></button></li>
+                                <li><button><i class="ti-shopping-cart"></i></button></li>
+                                <li><button><i class="ti-heart"></i></button></li>
+                            </ul>
+                        </div>
+                        <div class="card-body">
+                            <p>Decor</p>
+                            <h4 class="card-product__title"><a href="single-product.html">Room Flash Light</a>
+                            </h4>
+                            <p class="card-product__price">$150.00</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 col-xl-3">
+                    <div class="card text-center card-product">
+                        <div class="card-product__img">
+                            <img class="card-img" src="img/product/product4.png" alt="">
+                            <ul class="card-product__imgOverlay">
+                                <li><button><i class="ti-search"></i></button></li>
+                                <li><button><i class="ti-shopping-cart"></i></button></li>
+                                <li><button><i class="ti-heart"></i></button></li>
+                            </ul>
+                        </div>
+                        <div class="card-body">
+                            <p>Decor</p>
+                            <h4 class="card-product__title"><a href="single-product.html">Room Flash Light</a>
+                            </h4>
+                            <p class="card-product__price">$150.00</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 col-xl-3">
+                    <div class="card text-center card-product">
+                        <div class="card-product__img">
+                            <img class="card-img" src="img/product/product5.png" alt="">
+                            <ul class="card-product__imgOverlay">
+                                <li><button><i class="ti-search"></i></button></li>
+                                <li><button><i class="ti-shopping-cart"></i></button></li>
+                                <li><button><i class="ti-heart"></i></button></li>
+                            </ul>
+                        </div>
+                        <div class="card-body">
+                            <p>Accessories</p>
+                            <h4 class="card-product__title"><a href="single-product.html">Man Office Bag</a></h4>
+                            <p class="card-product__price">$150.00</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 col-xl-3">
+                    <div class="card text-center card-product">
+                        <div class="card-product__img">
+                            <img class="card-img" src="img/product/product6.png" alt="">
+                            <ul class="card-product__imgOverlay">
+                                <li><button><i class="ti-search"></i></button></li>
+                                <li><button><i class="ti-shopping-cart"></i></button></li>
+                                <li><button><i class="ti-heart"></i></button></li>
+                            </ul>
+                        </div>
+                        <div class="card-body">
+                            <p>Kids Toy</p>
+                            <h4 class="card-product__title"><a href="single-product.html">Charging Car</a></h4>
+                            <p class="card-product__price">$150.00</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 col-xl-3">
+                    <div class="card text-center card-product">
+                        <div class="card-product__img">
+                            <img class="card-img" src="img/product/product7.png" alt="">
+                            <ul class="card-product__imgOverlay">
+                                <li><button><i class="ti-search"></i></button></li>
+                                <li><button><i class="ti-shopping-cart"></i></button></li>
+                                <li><button><i class="ti-heart"></i></button></li>
+                            </ul>
+                        </div>
+                        <div class="card-body">
+                            <p>Accessories</p>
+                            <h4 class="card-product__title"><a href="single-product.html">Blutooth Speaker</a>
+                            </h4>
+                            <p class="card-product__price">$150.00</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 col-xl-3">
+                    <div class="card text-center card-product">
+                        <div class="card-product__img">
+                            <img class="card-img" src="img/product/product8.png" alt="">
+                            <ul class="card-product__imgOverlay">
+                                <li><button><i class="ti-search"></i></button></li>
+                                <li><button><i class="ti-shopping-cart"></i></button></li>
+                                <li><button><i class="ti-heart"></i></button></li>
+                            </ul>
+                        </div>
+                        <div class="card-body">
+                            <p>Kids Toy</p>
+                            <h4 class="card-product__title"><a href="#">Charging Car</a></h4>
+                            <p class="card-product__price">$150.00</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ================ trending product section end ================= -->
 
-                                <div class="col col-8">
-                                    <div class="card">
-                                        <canvas id="the-canvas">
-                                        </canvas>
-                                        <div>
-                                            <button style="border: 1px solid black;margin: 4px; padding: 3px;"
-                                                    id="prev">Previous
-                                            </button>
-                                            <button style="border: 1px solid black;margin: 4px; padding: 3px;"
-                                                    id="next">Next
-                                            </button>
-                                            &nbsp; &nbsp;
-                                            <span>Page: <span id="page_num"></span> / <span
-                                                    id="page_count"></span></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col col-4">
-                                    <div class="mt-4">
-                                        <br><br><br>
-                                        <span class="text-success">glissez deposez les champs de signature un par un sur le document</span>
-                                        <v-sheet class="px-4 py-4" color="orange" id="draggable"
-                                                 class="ui-widget-content">
-                                            @{{nom}} @{{prenom}}
-                                        </v-sheet>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <hr class="mb-2">
-                            <v-btn
-                                color="primary"
-                                @click="e1 = 4"
-                            >
-                                Continue
-                            </v-btn>
+    <!-- ================ offer section start ================= -->
+    <section class="offer" id="parallax-1" data-anchor-target="#parallax-1"
+        data-300-top="background-position: 20px 30px" data-top-bottom="background-position: 0 20px">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-5">
+                    <div class="offer__content text-center">
+                        <h3>Up To 50% Off</h3>
+                        <h4>Winter Sale</h4>
+                        <p>Him she'd let them sixth saw light</p>
+                        <a class="button button--active mt-3 mt-xl-4" href="#">Shop Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ================ offer section end ================= -->
 
-                        </v-stepper-content>
-                        <v-stepper-content step="4">
-                            <h5>Recapitulatif</h5>
-                            <p class="text--accent-1">
-                                verifier les informations de votre collecte puis valider
-                            </p>
+    <!-- ================ Best Selling item  carousel ================= -->
+    <section class="section-margin calc-60px">
+        <div class="container">
+            <div class="section-intro pb-60px">
+                <p>Popular Item in the market</p>
+                <h2>Best <span class="section-intro__style">Sellers</span></h2>
+            </div>
+            <div class="owl-carousel owl-theme" id="bestSellerCarousel">
+                <div class="card text-center card-product">
+                    <div class="card-product__img">
+                        <img class="img-fluid" src="img/product/product1.png" alt="">
+                        <ul class="card-product__imgOverlay">
+                            <li><button><i class="ti-search"></i></button></li>
+                            <li><button><i class="ti-shopping-cart"></i></button></li>
+                            <li><button><i class="ti-heart"></i></button></li>
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <p>Accessories</p>
+                        <h4 class="card-product__title"><a href="single-product.html">Quartz Belt Watch</a></h4>
+                        <p class="card-product__price">$150.00</p>
+                    </div>
+                </div>
 
-                            <div>
-                                <em>Nom de Collecte : </em> @{{ nomCollecte }}
-                            </div>
-                            <div>
-                                <em>Document a faire signe: </em> @{{ filePdf }}
-                            </div>
-                            <div>
-                                Activer la verification par : <em>Email</em>
-                            </div>
-                            <table border="2" class="table table-bordered table-hover">
-                                <thead>
-                                <tr>
-                                    <th>Ordre</th>
-                                    <th>Prenom</th>
-                                    <th>Nom</th>
-                                    <th>Email</th>
-                                    <th>Mobile</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>@{{ prenom }}</td>
-                                    <td>@{{ nom }}</td>
-                                    <td>@{{ email }}</td>
-                                    <td>@{{ telephone }}</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            <a href="{{route('acceuil')}}" class="btn btn-primary">valider</a>
-                            <v-btn text>Cancel</v-btn>
-                        </v-stepper-content>
-                    </v-stepper-items>
-                </v-stepper>
-            </v-container>
-        </v-main>
-    </v-app>
-</div>
+                <div class="card text-center card-product">
+                    <div class="card-product__img">
+                        <img class="img-fluid" src="img/product/product2.png" alt="">
+                        <ul class="card-product__imgOverlay">
+                            <li><button><i class="ti-search"></i></button></li>
+                            <li><button><i class="ti-shopping-cart"></i></button></li>
+                            <li><button><i class="ti-heart"></i></button></li>
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <p>Beauty</p>
+                        <h4 class="card-product__title"><a href="single-product.html">Women Freshwash</a></h4>
+                        <p class="card-product__price">$150.00</p>
+                    </div>
+                </div>
 
+                <div class="card text-center card-product">
+                    <div class="card-product__img">
+                        <img class="img-fluid" src="img/product/product3.png" alt="">
+                        <ul class="card-product__imgOverlay">
+                            <li><button><i class="ti-search"></i></button></li>
+                            <li><button><i class="ti-shopping-cart"></i></button></li>
+                            <li><button><i class="ti-heart"></i></button></li>
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <p>Decor</p>
+                        <h4 class="card-product__title"><a href="single-product.html">Room Flash Light</a></h4>
+                        <p class="card-product__price">$150.00</p>
+                    </div>
+                </div>
 
-<script>
-    new Vue({
-        el: '#app',
-        data() {
-            return {
-                e1: 1,
-                nom: null,
-                email:null,
-                telephone:null,
-                nomCollecte:null,
-                filePdf:null,
-                prenom: null,
-                model: {
-                    navigation: false
-                }
-            }
-        },
-        vuetify: new Vuetify(),
-    })
-</script>
-<script>
-    // If absolute URL from the remote server is provided, configure the CORS
-    // header on that server.
-    var url = 'https://raw.githubusercontent.com/mozilla/pdf.js/ba2edeae/web/compressed.tracemonkey-pldi-09.pdf';
+                <div class="card text-center card-product">
+                    <div class="card-product__img">
+                        <img class="img-fluid" src="img/product/product4.png" alt="">
+                        <ul class="card-product__imgOverlay">
+                            <li><button><i class="ti-search"></i></button></li>
+                            <li><button><i class="ti-shopping-cart"></i></button></li>
+                            <li><button><i class="ti-heart"></i></button></li>
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <p>Decor</p>
+                        <h4 class="card-product__title"><a href="single-product.html">Room Flash Light</a></h4>
+                        <p class="card-product__price">$150.00</p>
+                    </div>
+                </div>
 
-    // Loaded via <script> tag, create shortcut to access PDF.js exports.
-    var pdfjsLib = window['pdfjs-dist/build/pdf'];
+                <div class="card text-center card-product">
+                    <div class="card-product__img">
+                        <img class="img-fluid" src="img/product/product1.png" alt="">
+                        <ul class="card-product__imgOverlay">
+                            <li><button><i class="ti-search"></i></button></li>
+                            <li><button><i class="ti-shopping-cart"></i></button></li>
+                            <li><button><i class="ti-heart"></i></button></li>
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <p>Accessories</p>
+                        <h4 class="card-product__title"><a href="single-product.html">Quartz Belt Watch</a></h4>
+                        <p class="card-product__price">$150.00</p>
+                    </div>
+                </div>
 
-    // The workerSrc property shall be specified.
-    pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
+                <div class="card text-center card-product">
+                    <div class="card-product__img">
+                        <img class="img-fluid" src="img/product/product2.png" alt="">
+                        <ul class="card-product__imgOverlay">
+                            <li><button><i class="ti-search"></i></button></li>
+                            <li><button><i class="ti-shopping-cart"></i></button></li>
+                            <li><button><i class="ti-heart"></i></button></li>
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <p>Beauty</p>
+                        <h4 class="card-product__title"><a href="single-product.html">Women Freshwash</a></h4>
+                        <p class="card-product__price">$150.00</p>
+                    </div>
+                </div>
 
-    var pdfDoc = null,
-        pageNum = 1,
-        pageRendering = false,
-        pageNumPending = null,
-        scale = 0.8,
-        canvas = document.getElementById('the-canvas'),
-        ctx = canvas.getContext('2d');
+                <div class="card text-center card-product">
+                    <div class="card-product__img">
+                        <img class="img-fluid" src="img/product/product3.png" alt="">
+                        <ul class="card-product__imgOverlay">
+                            <li><button><i class="ti-search"></i></button></li>
+                            <li><button><i class="ti-shopping-cart"></i></button></li>
+                            <li><button><i class="ti-heart"></i></button></li>
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <p>Decor</p>
+                        <h4 class="card-product__title"><a href="single-product.html">Room Flash Light</a></h4>
+                        <p class="card-product__price">$150.00</p>
+                    </div>
+                </div>
 
-    /**
-     * Get page info from document, resize canvas accordingly, and render page.
-     * @param num Page number.
-     */
-    function renderPage(num) {
-        pageRendering = true;
-        // Using promise to fetch the page
-        pdfDoc.getPage(num).then(function (page) {
-            var viewport = page.getViewport({scale: scale});
-            canvas.height = viewport.height;
-            canvas.width = viewport.width;
+                <div class="card text-center card-product">
+                    <div class="card-product__img">
+                        <img class="img-fluid" src="img/product/product4.png" alt="">
+                        <ul class="card-product__imgOverlay">
+                            <li><button><i class="ti-search"></i></button></li>
+                            <li><button><i class="ti-shopping-cart"></i></button></li>
+                            <li><button><i class="ti-heart"></i></button></li>
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <p>Decor</p>
+                        <h4 class="card-product__title"><a href="single-product.html">Room Flash Light</a></h4>
+                        <p class="card-product__price">$150.00</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ================ Best Selling item  carousel end ================= -->
 
-            // Render PDF page into canvas context
-            var renderContext = {
-                canvasContext: ctx,
-                viewport: viewport
-            };
-            var renderTask = page.render(renderContext);
+    <!-- ================ Blog section start ================= -->
+    <section class="blog">
+        <div class="container">
+            <div class="section-intro pb-60px">
+                <p>Popular Item in the market</p>
+                <h2>Latest <span class="section-intro__style">News</span></h2>
+            </div>
 
-            // Wait for rendering to finish
-            renderTask.promise.then(function () {
-                pageRendering = false;
-                if (pageNumPending !== null) {
-                    // New page rendering is pending
-                    renderPage(pageNumPending);
-                    pageNumPending = null;
-                }
-            });
-        });
+            <div class="row">
+                <div class="col-md-6 col-lg-4 mb-4 mb-lg-0">
+                    <div class="card card-blog">
+                        <div class="card-blog__img">
+                            <img class="card-img rounded-0" src="img/blog/blog1.png" alt="">
+                        </div>
+                        <div class="card-body">
+                            <ul class="card-blog__info">
+                                <li><a href="#">By Admin</a></li>
+                                <li><a href="#"><i class="ti-comments-smiley"></i> 2 Comments</a></li>
+                            </ul>
+                            <h4 class="card-blog__title"><a href="single-blog.html">The Richland Center Shooping
+                                    News and weekly shooper</a></h4>
+                            <p>Let one fifth i bring fly to divided face for bearing divide unto seed. Winged
+                                divided light Forth.</p>
+                            <a class="card-blog__link" href="#">Read More <i class="ti-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
 
-        // Update page counters
-        document.getElementById('page_num').textContent = num;
-    }
+                <div class="col-md-6 col-lg-4 mb-4 mb-lg-0">
+                    <div class="card card-blog">
+                        <div class="card-blog__img">
+                            <img class="card-img rounded-0" src="img/blog/blog2.png" alt="">
+                        </div>
+                        <div class="card-body">
+                            <ul class="card-blog__info">
+                                <li><a href="#">By Admin</a></li>
+                                <li><a href="#"><i class="ti-comments-smiley"></i> 2 Comments</a></li>
+                            </ul>
+                            <h4 class="card-blog__title"><a href="single-blog.html">The Shopping News also offers
+                                    top-quality printing services</a></h4>
+                            <p>Let one fifth i bring fly to divided face for bearing divide unto seed. Winged
+                                divided light Forth.</p>
+                            <a class="card-blog__link" href="#">Read More <i class="ti-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
 
-    /**
-     * If another page rendering in progress, waits until the rendering is
-     * finised. Otherwise, executes rendering immediately.
-     */
-    function queueRenderPage(num) {
-        if (pageRendering) {
-            pageNumPending = num;
-        } else {
-            renderPage(num);
-        }
-    }
-
-    /**
-     * Displays previous page.
-     */
-    function onPrevPage() {
-        if (pageNum <= 1) {
-            return;
-        }
-        pageNum--;
-        queueRenderPage(pageNum);
-    }
-
-    document.getElementById('prev').addEventListener('click', onPrevPage);
-
-    /**
-     * Displays next page.
-     */
-    function onNextPage() {
-        if (pageNum >= pdfDoc.numPages) {
-            return;
-        }
-        pageNum++;
-        queueRenderPage(pageNum);
-    }
-
-    document.getElementById('next').addEventListener('click', onNextPage);
-
-    /**
-     * Asynchronously downloads PDF.
-     */
-    pdfjsLib.getDocument(url).promise.then(function (pdfDoc_) {
-        pdfDoc = pdfDoc_;
-        document.getElementById('page_count').textContent = pdfDoc.numPages;
-
-        // Initial/first page rendering
-        renderPage(pageNum);
-    });
-</script>
-<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-<script>
-    $(function () {
-        $("#draggable").draggable();
-    });
-</script>
-</body>
-</html>
+                <div class="col-md-6 col-lg-4 mb-4 mb-lg-0">
+                    <div class="card card-blog">
+                        <div class="card-blog__img">
+                            <img class="card-img rounded-0" src="img/blog/blog3.png" alt="">
+                        </div>
+                        <div class="card-body">
+                            <ul class="card-blog__info">
+                                <li><a href="#">By Admin</a></li>
+                                <li><a href="#"><i class="ti-comments-smiley"></i> 2 Comments</a></li>
+                            </ul>
+                            <h4 class="card-blog__title"><a href="single-blog.html">Professional design staff and
+                                    efficient equipment you’ll find we offer</a></h4>
+                            <p>Let one fifth i bring fly to divided face for bearing divide unto seed. Winged
+                                divided light Forth.</p>
+                            <a class="card-blog__link" href="#">Read More <i class="ti-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ================ Blog section end ================= -->
+@endsection

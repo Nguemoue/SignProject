@@ -1,66 +1,119 @@
-/*!
- * jQuery Ideal Forms
- * @author: Cedric Ruiz
- * @version: 3.0
- * @license GPL or MIT
- */
-(function($, win, doc, undefined) {
+$(function() {
+  "use strict";
 
-  var plugin = {};
+  //------- Parallax -------//
+  skrollr.init({
+    forceHeight: false
+  });
 
-  plugin.name = 'idealforms';
+  //------- Active Nice Select --------//
+  $('select').niceSelect();
 
-  plugin.defaults = {
-    field: '.field',
-    error: '.error',
-    iconHtml: '<i/>',
-    iconClass: 'icon',
-    invalidClass: 'invalid',
-    validClass: 'valid',
-    silentLoad: true,
-    onValidate: $.noop,
-    onSubmit: $.noop,
-    rules: {},
-    errors: {}
-  };
+  //------- hero carousel -------//
+  $(".hero-carousel").owlCarousel({
+    items:3,
+    margin: 10,
+    autoplay:false,
+    autoplayTimeout: 5000,
+    loop:true,
+    nav:false,
+    dots:false,
+    responsive:{
+      0:{
+        items:1
+      },
+      600:{
+        items: 2
+      },
+      810:{
+        items:3
+      }
+    }
+  });
 
-  plugin.global = {
+  //------- Best Seller Carousel -------//
+  if($('.owl-carousel').length > 0){
+    $('#bestSellerCarousel').owlCarousel({
+      loop:true,
+      margin:30,
+      nav:true,
+      navText: ["<i class='ti-arrow-left'></i>","<i class='ti-arrow-right'></i>"],
+      dots: false,
+      responsive:{
+        0:{
+          items:1
+        },
+        600:{
+          items: 2
+        },
+        900:{
+          items:3
+        },
+        1130:{
+          items:4
+        }
+      }
+    })
+  }
 
-    _format: function(str) {
-      var args = [].slice.call(arguments, 1);
-      return str.replace(/\{(\d)\}/g, function(_, match) {
-        return args[+match] || '';
-      }).replace(/\{\*([^*}]*)\}/g, function(_, sep) {
-        return args.join(sep || ', ');
-      });
-    },
+  //------- single product area carousel -------//
+  $(".s_Product_carousel").owlCarousel({
+    items:1,
+    autoplay:false,
+    autoplayTimeout: 5000,
+    loop:true,
+    nav:false,
+    dots:false
+  });
 
-    _getKey: function(key, obj) {
-      return key.split('.').reduce(function(a,b) {
-        return a && a[b];
-      }, obj);
-    },
+  //------- mailchimp --------//  
+	function mailChimp() {
+		$('#mc_embed_signup').find('form').ajaxChimp();
+	}
+  mailChimp();
+  
+  //------- fixed navbar --------//  
+  $(window).scroll(function(){
+    var sticky = $('.header_area'),
+    scroll = $(window).scrollTop();
 
-    i18n: {},
+    if (scroll >= 100) sticky.addClass('fixed');
+    else sticky.removeClass('fixed');
+  });
 
-    ruleSeparator: ' ',
-    argSeparator: ':',
+  //------- Price Range slider -------//
+  if(document.getElementById("price-range")){
+  
+    var nonLinearSlider = document.getElementById('price-range');
+    
+    noUiSlider.create(nonLinearSlider, {
+        connect: true,
+        behaviour: 'tap',
+        start: [ 500, 4000 ],
+        range: {
+            // Starting at 500, step the value by 500,
+            // until 4000 is reached. From there, step by 1000.
+            'min': [ 0 ],
+            '10%': [ 500, 500 ],
+            '50%': [ 4000, 1000 ],
+            'max': [ 10000 ]
+        }
+    });
+  
+  
+    var nodes = [
+        document.getElementById('lower-value'), // 0
+        document.getElementById('upper-value')  // 1
+    ];
+  
+    // Display the slider value and how far the handle moved
+    // from the left edge of the slider.
+    nonLinearSlider.noUiSlider.on('update', function ( values, handle, unencoded, isTap, positions ) {
+        nodes[handle].innerHTML = values[handle];
+    });
+  
+  }
+  
+});
 
-    rules: require('./rules'),
-    errors: require('./errors'),
 
-    extensions: [
-      require('./extensions/dynamic-fields/dynamic-fields.ext'),
-      require('./extensions/ajax/ajax.ext'),
-      require('./extensions/steps/steps.ext'),
-      require('./extensions/custom-inputs/custom-inputs.ext'),
-      require('./extensions/datepicker/datepicker.ext'),
-      require('./extensions/adaptive/adaptive.ext')
-    ]
-  };
-
-  plugin.methods = $.extend({}, require('./private'), require('./public'));
-
-  require('./plugin')(plugin);
-
-}(jQuery, window, document));
