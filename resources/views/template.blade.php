@@ -2,21 +2,23 @@
 <html lang="fr">
 
 <head>
-    @includeIf("_partials.head")
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    @includeIf('_partials.head')
     @livewireStyles()
 </head>
 
 <body>
     <!--================ Start Header Menu Area =================-->
-        @includeIf("_partials.header")    
+    @includeIf('_partials.header')
     <!--================ End Header Menu Area =================-->
 
     <main class="site-main">
-        @yield("main")
+        @yield('main')
     </main>
 
     <!--================ Start footer Area  =================-->
-    @includeIf("_partials.script")
+    @includeIf('_partials.script')
+    @includeIf('_partials.swal')
     @livewireScripts()
 </body>
 

@@ -3,7 +3,7 @@ $(function() {
 
   //------- Parallax -------//
   skrollr.init({
-    forceHeight: false
+    forceHeight: 10
   });
 
   //------- Active Nice Select --------//
@@ -66,11 +66,6 @@ $(function() {
     dots:false
   });
 
-  //------- mailchimp --------//  
-	function mailChimp() {
-		$('#mc_embed_signup').find('form').ajaxChimp();
-	}
-  mailChimp();
   
   //------- fixed navbar --------//  
   $(window).scroll(function(){

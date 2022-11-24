@@ -28,13 +28,13 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
+       
         VerifyEmail::toMailUsing(function ($notifiable,$url){
             return (new MailMessage)
-                ->salutation("Hello ".$notifiable->name)
-                ->markdown("verification_mail",compact('notifiable','url'))
-                ->subject('Verification du compte')
-                ->line('Cliquez sur le bouton suivant pour valider votre compte.')
-                ->action('Verify Email Address', $url);
+                    ->markdown("verification_mail",compact('notifiable','url'));
+                // ->subject('Verification du compte')
+                // ->line('Cliquez sur le bouton suivant pour valider votre compte.')
+                // ->action('Verify Email Address', $url);
 //            return (new SendEmailVerificationMail($notifiable,$url))->cc("bakari@gmail.com") ;
         });
     }

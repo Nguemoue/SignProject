@@ -42,4 +42,13 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    function coordBank(){
+        return $this->hasOne(CoordBancaire::class);
+    }
+
+    function adresse(){
+        return $this->hasOne(Adresse::class);
+    }
 }
