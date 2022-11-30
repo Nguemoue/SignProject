@@ -26,21 +26,24 @@
             <div class="row s_product_inner">
                 <div class="col-lg-6">
                     <div class="owl-carousel owl-theme s_Product_carousel">
-                        <div class="single-prd-item">
-                            <img class="img-fluid" src="{{ asset('img/category/s-p1.jpg') }}" alt="">
+                        @foreach ($produit->images as $image)
+                            <div class="single-prd-item">
+                            <img class="img-fluid" src="{{ asset('storage/'.$image->photo) }}" alt="">
                         </div>
+                        @endforeach
                     </div>
                 </div>
                 <div class="col-lg-5 offset-lg-1">
                     <form action="{{ route('cart.index') }}" method="POST">
                         @csrf
                         <input type="hidden" name="produitId" value="{{ $produit->id }}">
-                        @includeIf("_partials.errors")
+                        @includeIf('_partials.errors')
                         <div class="s_product_text">
                             <h3>{{ $produit->nom }}</h3>
                             <h2>${{ $produit->prix }}</h2>
                             <ul class="list">
-                                <li><a class="active" href="#"><span>Category</span> : {{ $produit->categorie?->nom }}
+                                <li>
+                                    <a class="active" href="#"><span>Category</span> : {{ $produit->categorie->nom }}
                                 </li>
                                 <li><a href="#"><span>Availibility</span> : In Stock</a></li>
                             </ul>

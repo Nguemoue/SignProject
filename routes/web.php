@@ -21,34 +21,42 @@ use App\Http\Controllers\Shop\ProductCheckoutController;
 |
 */
 
+Route::get("/", [\App\Http\Controllers\HomeController::class, "home"])->name("home");
+
+//not use middleware
+Route::prefix("shop")->group(function () {
+    Route::get("/category", [CategoryController::class, "__invoke"])->name("shop.category");
+    Route::get("/single-product/{productId}", [SingleProductController::class, "__invoke"])->name("shop.singleProduct")->whereNumber("productId");
+});
+
 Route::group([
     "middleware" => ["auth", "verified"]
 ], function () {
-    
+
     // home route
     Route::get("/dashboard", [\App\Http\Controllers\HomeController::class, "dashboard"])->name("dashboard");
-    Route::get("/", [\App\Http\Controllers\HomeController::class, "home"])->name("home");
-    
+
     //shop routes
     Route::prefix("shop")->group(function () {
-        Route::get("/category", [CategoryController::class, "__invoke"])->name("shop.category");
-        Route::get("/checkout",[ProductCheckoutController::class,"__invoke"])->name("shop.checkout");
-        Route::get("/confirmation",[ConfirmationController::class,"__invoke"])->name("shop.confirmation");
+        Route::get("/checkout", [ProductCheckoutController::class, "__invoke"])->name("shop.checkout");
+        Route::post("/checkout",[ProductCheckoutController::class,"checkout"])->name("shop.checkout.store");
+        Route::get("/confirmation", [ConfirmationController::class, "__invoke"])->name("shop.confirmation");
+        Route::post('/confirmation',[ConfirmationController::class,"store"])->name('shop.confirmation.store');
         Route::get("/cart", [CartController::class, "__invoke"])->name("shop.cart");
-        Route::get("/single-product/{productId}", [SingleProductController::class, "__invoke"])
-            ->name("shop.singleProduct")->whereNumber("productId");
     });
 
     //blog routes
-    Route::prefix("blog")->group(function(){
-        Route::get("/",[BlogController::class,"__invoke"])->name("blog.index");
-        Route::get("/single-blog/{blogId}",[SingleBlogController::class,"__invoke"])->name("blog.singleBlog");
+    Route::prefix("blog")->group(function () {
+        Route::get("/", [BlogController::class, "__invoke"])->name("blog.index");
+        Route::get("/single-blog/{blogId}", [SingleBlogController::class, "__invoke"])->name("blog.singleBlog");
     });
 
     //route pour la cart
-    Route::post('cart',[CartController::class,"index"])->name("cart.index");
+    Route::post('cart', [CartController::class, "index"])->name("cart.index");
+    Route::get('cart/destroy', [CartController::class, "delete"])->name("cart.delete");
 });
 
 //routes for contact
-Route::get("/contact",[ContactController::class,"__invoke"])->name("contact");
+Route::get("/contact", [ContactController::class, "__invoke"])->name("contact");
 require __DIR__ . '/auth.php';
+require __DIR__ . '/admin.php';

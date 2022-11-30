@@ -42,37 +42,44 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item submenu dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
-                                aria-haspopup="true" aria-expanded="false">Account</a>
-                            <ul class="dropdown-menu">
-                                @guest
-                                    <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Sign in</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Sign up</a></li>
-                                @endguest
-                                @auth
-                                    <li class="nav-item"><a class="nav-link" href="{{ route('dashboard') }}">Dashboard/{{ auth()->user()->name }}</a></li>
-                                    <li class="nav-item">
-                                        <a onclick="document.getElementById('logoutForm').submit()" class="nav-link text-danger" href="#">
-                                            <form id="logoutForm" action="{{ route('logout') }}" method="POST">
-                                                @csrf
-                                                Logout
-                                            </form>
-                                        </a>
-                                    </li>
-                                @endauth
-
-                            </ul>
-                        </li>
                         <li @class(['nav-item', 'active' => Route::is('contact')])><a class="nav-link" href="{{ route('contact') }}">Contact</a>
                         </li>
                     </ul>
 
                     <ul class="nav-shop">
+         
                         <li class="nav-item"><button><i class="ti-search"></i></button></li>
+                        <li class="nav-item submenu dropdown" >
+                            <a href="#" class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown" role="button">
+                                <i class="ti-user"></i>
+                            </a>
+                            <ul class="dropdown-menu text-center">
+                                @guest
+                                <li ><a class="nav-link" href="{{ route('register') }}">Sign up</a></li>
+                                
+                                <li ><a class="nav-link" href="{{ route('login') }}">Sign in</a></li>
+                                @endguest
+                                @auth('web')
+                                    <li class="nav-item"><a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a></li>
+                                    <li class="nav-item">
+                                        <a onclick="document.getElementById('logoutForm').submit()" class="nav-link text-danger" href="#">
+                                            Logout
+                                        </a>
+                                    </li>
+                                    <form id="logoutForm" action="{{ route('logout') }}" method="POST">
+                                        @csrf
+                                    </form>
+                                @endauth
+                            </ul>
+                        </li>
                         <li class="nav-item"><button><i class="ti-shopping-cart"></i><span
-                                    class="nav-shop__circle">{{ session()->get('panier.count',0) }}</span></button> </li>
-                        <li class="nav-item"><a class="button button-header" href="#">Buy Now</a></li>
+                                    class="nav-shop__circle">
+                                    @php
+                                        $nbprod = session()->get("panier.produits",0);
+                                        $sessionNumber = ($nbprod==0)?$nbprod:count($nbprod);
+                                    @endphp
+                                    {{ $sessionNumber }} </span></button> </li>
+                        <li @class(["nav-item",'active'=>Route::is('shop.checkout')])><a class="button active button-header" href="{{ route('shop.checkout') }}">Buy Now</a></li>
                     </ul>
                 </div>
             </div>

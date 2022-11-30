@@ -8,7 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class CouleurProduit extends Model
 {
     use HasFactory;
-    function produits(){
+
+    protected $fillable = [
+        'nom','code','produit_id'
+    ];
+    function produit(){
         return $this->belongsTo(Produit::class);
     }
 

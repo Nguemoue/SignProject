@@ -19,6 +19,9 @@ class RouteServiceProvider extends ServiceProvider
      */
     public const HOME = '/';
 
+    //const for defining the admin default redirect
+
+    public const ADMIN_HOME = '/admin';
     /**
      * Define your route model bindings, pattern filters, and other route configuration.
      *
@@ -47,6 +50,9 @@ class RouteServiceProvider extends ServiceProvider
     {
         RateLimiter::for('api', function (Request $request) {
             return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
+        });
+        RateLimiter::for("test",function(Request $request){
+            return Limit::perMinute(3)->by($request->user()->id);
         });
     }
 }

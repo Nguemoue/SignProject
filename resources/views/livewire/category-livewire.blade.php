@@ -9,23 +9,22 @@
                             <ul>
                                 <a class="d-block" style="color: none;text-decoration:none">
                                     <li class="filter-list">
-                                        <input wire:click="setCategorie('')" class="pixel-radio" type="radio"
+                                        <input wire:click="setCategorie('')" checked class="pixel-radio" type="radio"
                                             id="men" name="brand">
                                         <label for="toute"><span>Toutes
                                                 ({{ $nbProduits }})</span></label>
                                     </li>
                                 </a>
                                 @foreach ($categories as $categorie)
-                                    <a class="d-block" style="color: none;text-decoration:none;">
-                                        <li class="filter-list">
-                                            <input wire:click="setCategorie('{{ $categorie->nom }}')"
-                                                class="pixel-radio" @checked($categorie->nom == $currentCat) type="radio"
-                                                id="men" name="brand">
-                                            <label for="{{ $categorie->nom }}"><span> {{ $categorie->nom }}
-                                                    ({{ $categorie->nbProduits() }})
-                                                </span></label>
-                                        </li>
-                                    </a>
+                                    <li>
+
+                                        <label wire:click="setCategorie('{{ $categorie->nom }}')" class="filter-list"
+                                            for="{{ $categorie->nom }}">
+                                            <input class="pixel-radio" type="radio" id="{{ $categorie->nom }}"
+                                                name="brand">
+                                            <span> {{ $categorie->nom }} ({{ $categorie->nbProduits() }})</span>
+                                        </label>
+                                    </li>
                                 @endforeach
                             </ul>
                         </form>
@@ -38,45 +37,38 @@
             <div class="filter-bar d-flex flex-wrap align-items-center">
 
                 <div class="sorting mr-auto">
-                    <select>
-                        <option hidden selected>Filtrer par</option>
-                        <option value="1">Couleur</option>
-                        <option value="1">Nom</option>
-                    </select>
-                </div>
-                <div class="sorting mr-auto">
-                    <select>
-                        <option hidden selected>Prix :</option>
-                        <option value="1">0-99</option>
-                        <option value="1">100-199</option>
-                        <option value="1">200-299</option>
-                        <option value="1">300-399</option>
-                        <option value="1">400-499</option>
-                        <option value="1"> -- </option>
-                    </select>
+                        @if ($produits->links())
+                        <div class=" mx-auto w-75">
+                            {{ $produits->links() }}
+                        </div>
+                    @endif    
                 </div>
                 <div>
+                    <form action="#" onsubmit="return false">
                     <div class="input-group filter-bar-search">
-                        <input type="text" placeholder="Search">
+                        <input wire:model.debounce.200="search" type="text" placeholder="Search">
                         <div class="input-group-append">
-                            <button type="button"><i class="ti-search"></i></button>
+                            <button onclick="preventDefault()" wire:click.prevent="rechercher" type="button"><i class="ti-search"></i></button>
                         </div>
                     </div>
+                </form>
                 </div>
+                
+                
             </div>
             <!-- End Filter Bar -->
             <!-- Start Best Seller -->
             <section class="lattest-product-area pb-40 category-list">
                 <div class="row">
-                    <div class="text-danger border px-4 container" wire:loading>
-                        chargement du resultat .....
+                    <div class="text-danger  px-4 container" wire:loading>
+                        traitement en cours .....
                     </div>
                     @forelse ($produits as $produit)
                         <div class="col-md-6 col-lg-4">
                             <div class="card text-center card-product">
                                 <div class="card-product__img">
                                     <img class="card-img" loading="lazing" lazy
-                                        src="{{ asset($produit->images[0]->photo) }}" alt="">
+                                        src="{{ asset('storage/'.$produit->images[0]->photo) }}" alt="">
                                     <ul class="card-product__imgOverlay">
                                         <li><button><i class="ti-search"></i></button></li>
                                         <li><button><i class="ti-shopping-cart"></i></button></li>
@@ -84,7 +76,7 @@
                                     </ul>
                                 </div>
                                 <div class="card-body">
-                                    <p>{{ $produit->categorie?->nom }}</p>
+                                    <p>{{ $produit->categorie ? $produit->categorie->nom : 'aucune categorie' }}</p>
                                     <h4 class="card-product__title"><a
                                             href="{{ route('shop.singleProduct', ['productId' => $produit->id]) }}">{{ $produit->nom }}</a>
                                     </h4>
@@ -98,11 +90,7 @@
                         </div>
                     @endforelse
                 </div>
-                @if ($produits->links())
-                    <div class="card-footer mx-auto w-50">
-                        {{ $produits->links() }}
-                    </div>
-                @endif
+
             </section>
             <!-- End Best Seller -->
         </div>

@@ -7,6 +7,7 @@ use App\Models\Produit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 class CartController extends Controller
 {
@@ -17,6 +18,7 @@ class CartController extends Controller
         $produits = Session::get('panier.produits',[]);
         $produits = Arr::map($produits,function($val,$key){
             $produit = Produit::find($key);
+            $produit->nombre = $val;
             return ($produit);
         });
         return view('shop.cart',[
@@ -47,5 +49,19 @@ class CartController extends Controller
         }
 
         return redirect()->route('shop.cart');
+    }
+
+
+    // fonction qui va peremetre de supprimer un element dans le panier
+    function delete(Request $request){
+        Validator::make($request->all(),[
+            'produit_id'=>['required','integer','exists:produits,id']
+        ]);
+
+        //si on valide notre requete
+        $id = $request->produit_id;
+        //je supprime la donnes dans la session
+        session()->forget('panier.produits.'.$id);
+        return redirect()->back()->with("success","cet element a ete retirer du panier avec success");
     }
 }

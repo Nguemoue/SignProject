@@ -2,12 +2,12 @@
 @if(session()->has('success'))
     <script defer>
         Swal.fire({
-            position:"top-end",
+            position:"bottom-end",
             toast:true,
             timer: 4000,
             showCancelButton:false,
             showConfirmButton:false,
-            showCloseButton:true,
+            showCloseButton:false,
             icon:"success",
             titleText:`{{session()->get('success')}}`
         })

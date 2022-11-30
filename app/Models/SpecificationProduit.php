@@ -9,7 +9,7 @@ class SpecificationProduit extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'weight','peremtion','height','depth'
+        'weight','peremtion','height','depth','consigne','width'
     ];
 
     protected $casts = [

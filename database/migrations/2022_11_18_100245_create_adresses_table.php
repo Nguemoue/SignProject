@@ -19,6 +19,10 @@ return new class extends Migration
             $table->string("ville",100)->nullable();
             $table->string("quartier",200)->nullable();
             $table->string("boitePostal",100)->nullable();
+            $table->tinyInteger('numeroRue')->nullable();
+            $table->tinyInteger('zip')->nullable();
+            $table->string('district',100)->nullable();
+
             $table->foreignId("user_id")->constrained()->cascadeOnDelete();
             $table->timestamps();
         });

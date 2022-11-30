@@ -18,7 +18,10 @@ return new class extends Migration
             $table->string("nom");
             $table->string("email")->unique();
             $table->string("password");
+            $table->string("photo")->nullable();
             $table->string("telephone");
+            $table->timestamp('email_verified_at')->nullable();
+            $table->rememberToken();
             $table->enum("role",["admin","superAdmin"])->default("admin");
             $table->timestamps();
         });

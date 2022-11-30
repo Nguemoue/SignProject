@@ -22,7 +22,7 @@ class Post extends Model
     }
     function comments(){
         return $this->hasMany(Comment::class);
-  aa  }
+   }
     function resource(){
         return $this->hasOne(RessourcePost::class,'produit_id');
     }

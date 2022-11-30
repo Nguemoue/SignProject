@@ -1,4 +1,4 @@
-@extends('template')
+@extends('admin.template')
 
 @section('main')
     <!--================ Hero banner start =================-->

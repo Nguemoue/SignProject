@@ -209,6 +209,7 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
+        'TaxeCalculator'=>App\Action\TaxeCalculator::class
         // 'ExampleClass' => App\Example\ExampleClass::class,
     ])->toArray(),
 

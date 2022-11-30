@@ -24,22 +24,27 @@
   <section class="order_details section-margin--small">
     <div class="container">
       <p class="text-center billing-alert">Thank you. Your order has been received.</p>
+      @if (!$commande->isValidated)
+          <div class="alert alert-warning">
+              Votre commande numero <b>{{ $commande->numero }}</b> est en attente de livraison
+          </div>
+      @endif
       <div class="row mb-5">
         <div class="col-md-6 col-xl-4 mb-4 mb-xl-0">
           <div class="confirmation-card">
             <h3 class="billing-title">Order Info</h3>
             <table class="order-rable">
               <tr>
-                <td>Order number</td>
-                <td>: 60235</td>
+                <td>Order number </td>
+                <td > {{ $commande->id }} </td>
               </tr>
               <tr>
                 <td>Date</td>
-                <td>: Oct 03, 2017</td>
+                <td>: {{ $commande->created_at->IsoFormat('lll') }}</td>
               </tr>
               <tr>
                 <td>Total</td>
-                <td>: USD 2210</td>
+                <td>: USD {{ $commande->prix }}</td>
               </tr>
               <tr>
                 <td>Payment method</td>
@@ -51,22 +56,25 @@
         <div class="col-md-6 col-xl-4 mb-4 mb-xl-0">
           <div class="confirmation-card">
             <h3 class="billing-title">Billing Address</h3>
+            @php
+              $adresse = auth()->user()->adresse
+            @endphp
             <table class="order-rable">
               <tr>
                 <td>Street</td>
-                <td>: 56/8 panthapath</td>
+                <td>: {{ $adresse->quartier }}</td>
               </tr>
               <tr>
                 <td>City</td>
-                <td>: Dhaka</td>
+                <td>: {{ $adresse->ville }}</td>
               </tr>
               <tr>
                 <td>Country</td>
-                <td>: Bangladesh</td>
+                <td>: {{ $adresse->pays }}</td>
               </tr>
               <tr>
                 <td>Postcode</td>
-                <td>: 1205</td>
+                <td>: {{$adresse->zip }}<td>
               </tr>
             </table>
           </div>
@@ -107,50 +115,21 @@
               </tr>
             </thead>
             <tbody>
+              @foreach ($commande->commandeProduits as $item)
+                  
               <tr>
                 <td>
-                  <p>Pixelstore fresh Blackberry</p>
+                  <p>{{ $item->produit->nom }}</p>
                 </td>
                 <td>
-                  <h5>x 02</h5>
+                  <h5>x {{ $item->quantite }}</h5>
                 </td>
                 <td>
-                  <p>$720.00</p>
+                  <p>$ {{ $item->quantite * $item->produit->prix }}</p>
                 </td>
               </tr>
-              <tr>
-                <td>
-                  <p>Pixelstore fresh Blackberry</p>
-                </td>
-                <td>
-                  <h5>x 02</h5>
-                </td>
-                <td>
-                  <p>$720.00</p>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <p>Pixelstore fresh Blackberry</p>
-                </td>
-                <td>
-                  <h5>x 02</h5>
-                </td>
-                <td>
-                  <p>$720.00</p>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <h4>Subtotal</h4>
-                </td>
-                <td>
-                  <h5></h5>
-                </td>
-                <td>
-                  <p>$2160.00</p>
-                </td>
-              </tr>
+              @endforeach
+              
               <tr>
                 <td>
                   <h4>Shipping</h4>
@@ -159,7 +138,7 @@
                   <h5></h5>
                 </td>
                 <td>
-                  <p>Flat rate: $50.00</p>
+                  <p>Flat rate: $ {{ TaxeCalculator::get($commande->prix) }}</p>
                 </td>
               </tr>
               <tr>
@@ -170,7 +149,7 @@
                   <h5></h5>
                 </td>
                 <td>
-                  <h4>$2210.00</h4>
+                  <h4>$ {{ $commande->prix }}</h4>
                 </td>
               </tr>
             </tbody>

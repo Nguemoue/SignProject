@@ -9,6 +9,9 @@ class Produit extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'nom','description','quantite','prix','categorie_produit_id'
+    ];
     function couleur(){
         return $this->hasMany(CouleurProduit::class);
     }
@@ -17,7 +20,7 @@ class Produit extends Model
         return $this->hasOne(SpecificationProduit::class);
     }
     function categorie(){
-        return $this->belongsTo(CategorieProduit::class);
+        return $this->belongsTo(CategorieProduit::class,'categorie_produit_id');
     }
 
     function marque(){
