@@ -24,7 +24,7 @@
     <section class="cart_area">
         <div class="container">
             <div class="cart_inner">
-                @if (session()->exists('panier'))
+                @if (session()->exists('panier.produits') and session()->get('panier.produits')!=[])
                     @includeIf('_partials.errors')
                     <form action="{{ route('shop.checkout.store') }}" method="POST">
                         @csrf
@@ -45,13 +45,13 @@
                                 </tbody>
                             </table>
                             <div>
-                                <button type="submit" class="btn btn-success">Proceder au paiement</button>
+                                <button type="submit" class="btn btn-primary">Proceder au paiement</button>
                             </div>
                         </div>
                     </form>
                 @else
                     <div class="alert alert-warning">
-                        aucun produit dans le panier
+                        Aucun produit dans le panier
                     </div>
                 @endif
             </div>

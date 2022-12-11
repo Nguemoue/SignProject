@@ -64,7 +64,7 @@
                                         +
                                     </button>
                                 </div>
-                                <button type="submit" class="btn btn-success primary-btn" title="ajouter au panier">
+                                <button type="submit" class="btn btn-primary primary-btn" title="ajouter au panier">
                                     Add to Cart</button>
                             </div>
                             <div class="card_area d-flex align-items-center">

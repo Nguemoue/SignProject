@@ -8,6 +8,7 @@ use App\Http\Requests\AdminLoginRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Providers\RouteServiceProvider;
 use App\Http\Requests\Auth\LoginRequest;
+use Illuminate\Support\Facades\Session;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -29,8 +30,10 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(AdminLoginRequest $request)
     {
+        $request->session()->invalidate();
+        $request->session()->regenerate(); 
         $request->authenticate();
-
+        // $request->session()->regenerate();
         return redirect()->intended(RouteServiceProvider::ADMIN_HOME);
     }
 

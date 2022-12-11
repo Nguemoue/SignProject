@@ -4,13 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Queue\SerializesModels;
 
 class commande extends Model
 {
-    use HasFactory;
+    use HasFactory , SerializesModels;
 
     protected $fillable = [
-        'user_id','prix'
+        'user_id','prix','prixTtc'
     ];
     function commandeProduits(){
         return $this->hasMany(CommandeProduit::class);

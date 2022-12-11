@@ -17,7 +17,9 @@ class Produit extends Model
     }
 
     function specification(){
-        return $this->hasOne(SpecificationProduit::class);
+        return $this->hasOne(SpecificationProduit::class)->withDefault([
+             'width'=>1,'height'=>1 ,'depth'=>1, 'weight'=>1 ,'consigne'=>'ne pas geter' ,'peremtion'=>now()
+        ]);
     }
     function categorie(){
         return $this->belongsTo(CategorieProduit::class,'categorie_produit_id');

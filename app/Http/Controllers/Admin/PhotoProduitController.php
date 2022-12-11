@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Action\DecryptBase64File;
 use App\Http\Controllers\Controller;
 use App\Models\PhotoProduit;
 use App\Models\Produit;
@@ -40,7 +41,6 @@ class PhotoProduitController extends Controller
      */
     public function store(Request $request)
     {
-
         //je valide mes dones
         Validator::make($request->only(['photo', 'produit_id']), [
             'photo' => ['required', 'image'],
@@ -107,17 +107,23 @@ class PhotoProduitController extends Controller
     }
 
     function changePhoto(Request $request){
-        // dd($request->file('photo'));
+        // dd($request);
+        // le champ resultfile est ce qui contient le stream du cropper
         $request->validate([
+            'resultFile'=>['required','string'],
             'photo'=>['required','image'],
             'photo_id'=>['required','exists:photo_produits,id'],
             'produit_id'=>['required','exists:produits,id']
         ]);
         //
-
+        $stream = DecryptBase64File::decrypt($request->input('resultFile'));
         $photo = PhotoProduit::query()->findOrFail($request->input('photo_id'));
-        $photo->photo = $request->file('photo')->store('produits');
+        // je supprime l'ancienne photo
+        Storage::delete($photo->photo);
+        $filename = "produits/" . $stream->name;
+        $photo->photo = $filename;
         $photo->save();
+        Storage::put($filename,$stream->content);
         return redirect()->back()->with('info','image modifie avec success');
     }
 }

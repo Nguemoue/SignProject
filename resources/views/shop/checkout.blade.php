@@ -22,6 +22,7 @@
 
 
     <!--================Checkout Area =================-->
+    
     <section class="checkout_area section-margin--small">
         <div class="container">
 
@@ -56,8 +57,8 @@
                             {{-- telephone --}}
                             <div class="row">
                                 <div class="col-md-12 form-group p_star">
-                                    <input type="text" class="form-control" value="{{ $user->telephone }}"
-                                        id="number" readonly name="number" placeholder="numero de telephone">
+                                    <input type="text" class="form-control" value="{{ $user->telephone }}" id="number"
+                                        readonly name="number" placeholder="numero de telephone">
                                 </div>
                             </div>
 
@@ -76,28 +77,32 @@
                                     </select>
                                 </div>
                             </div>
-            
+
                             <div class="row">
                                 <div class="col-md-12 form-group p_star">
                                     <label for="adresse">Adresse</label>
-                                    <input type="text" value="{{ $adresse->quartier . ''.$adresse->numeroRue }}" class="form-control" required name="adresse" id="adresse" name="adresse">
+                                    <input type="text" value="{{ $adresse->quartier . '' . $adresse->numeroRue }}"
+                                        class="form-control" required name="adresse" id="adresse" name="adresse">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12 form-group p_star">
-                                <label for="city">Ville</label>
-                                <input type="text" value="{{ $adresse->ville }}" class="form-control" id="city" required name="ville">
-                            </div>
+                                    <label for="city">Ville</label>
+                                    <input type="text" value="{{ $adresse->ville }}" class="form-control" id="city"
+                                        required name="ville">
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6 form-group p_star">
                                     <label for="">District</label>
-                                <input placeholder="district" value="{{ $adresse->district }}" type="text" required class="form-control" id="city" name="district">
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label for="">Zip</label>
-                                <input type="text" class="form-control" id="zip" value="{{ $adresse->zip }}" name="zip" required placeholder="Postcode/ZIP">
-                            </div>
+                                    <input placeholder="district" value="{{ $adresse->district }}" type="text" required
+                                        class="form-control" id="city" name="district">
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label for="">Zip</label>
+                                    <input type="text" class="form-control" id="zip" value="{{ $adresse->zip }}"
+                                        name="zip" required placeholder="Postcode/ZIP">
+                                </div>
                             </div>
                         </div>
                         <div class="col-lg-5">
@@ -117,12 +122,14 @@
                                 </ul>
                                 <ul class="list list_2">
                                     <li><a href="#">Subtotal <span>${{ $count }}</span></a></li>
-                                    <li><a href="#">Shipping <span>Flat rate: $00.00</span></a></li>
-                                    <li><a href="#">Total <span>${{ $count }}</span></a></li>
+                                    <li><a href="#">Shipping <span>Flat rate:
+                                                ${{ TaxeCalculator::get($count) }}</span></a></li>
+                                    <li><a href="#">Total
+                                            <span>${{ $count + TaxeCalculator::get($count) }}</span></a></li>
                                 </ul>
                                 <div class="payment_item active">
                                     <div class="radion_btn">
-                                        <input required type="radio" id="f-option6" name="accept">
+                                        <input required checked type="radio" id="f-option6" name="accept">
                                         <label for="f-option6">Paypal </label>
                                         <img src="{{ asset('img/product/card.jpg') }}" alt="">
                                         <div class="check"></div>
@@ -136,7 +143,8 @@
                                     <a href="#">terms & conditions*</a>
                                 </div>
                                 <div class="text-center">
-                                    <button type="submit" class="button button-paypal" href="#">Proceed to Paypal</button>
+                                    <button type="submit" class="button button-paypal" href="#">Proceed to
+                                        Paypal</button>
                                 </div>
                             </div>
                         </div>

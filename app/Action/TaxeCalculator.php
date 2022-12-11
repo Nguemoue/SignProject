@@ -5,6 +5,6 @@ use SebastianBergmann\CodeCoverage\Util\Percentage;
 
 class TaxeCalculator{
     public static function get($amount){
-        return $amount * 0.5;
+        return $amount * 0.05;
     }
 }

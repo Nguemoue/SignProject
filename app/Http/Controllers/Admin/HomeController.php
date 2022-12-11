@@ -18,7 +18,7 @@ class HomeController extends Controller
         //je verifie si il a envoyer bien la photo
         Validator::make($request->only('password'), [
             'password' => ['required',Password::min(4), 'confirmed']
-        ]);
+        ])->validate();
         $admin = auth()->user();
         $admin->password = $request->password;
         $admin->save();
@@ -29,7 +29,7 @@ class HomeController extends Controller
         //je verifie si il a envoyer bien la photo
         Validator::make($request->only('photo'),[
             'photo'=> ['required','image']
-        ]);
+        ])->validate();
 
         $admin =  auth('admin')->user();
         $admin->photo = $request->file('photo')->store('avatar');

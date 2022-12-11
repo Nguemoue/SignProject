@@ -5,7 +5,7 @@
 <meta name="author" content="" />
 <title>{{ env('APP_NAME') }}</title>
 <!-- Favicon-->
-<link rel="icon" type="image/x-icon" href="{{ asset('logo.jpg') }}" />
+<link rel="icon" type="image/x-icon" href="{{ asset('logo-ico.jpg') }}" />
 <!-- Core theme CSS (includes Bootstrap)-->
 {{-- <link href="{{ asset('css/styles.css') }}" rel="stylesheet" /> --}}
 {{-- <link rel="stylesheet" href="{{ asset('mdi/css/materialdesignicons.min.css') }}"> --}}

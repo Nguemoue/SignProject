@@ -17,6 +17,7 @@
     </main>
 
     <!--================ Start footer Area  =================-->
+    @includeIf("_partials.footer")
     @includeIf('_partials.script')
     @includeIf('_partials.swal')
     @livewireScripts()

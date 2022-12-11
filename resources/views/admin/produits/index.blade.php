@@ -4,6 +4,12 @@
     <div class="container-fluid">
         <h2 class="text-center">Liste des Produits Disponibles</h2>
         <hr>
+        <div class="mb-3">
+            <a href="{{ route('admin.produits.create') }}" class="btn btn-secondary">
+                <i class="mdi mdi-plus"></i>
+                Creer produit
+            </a>
+        </div>
         <div class="container">
             {{ $produits->links() }}
         </div>

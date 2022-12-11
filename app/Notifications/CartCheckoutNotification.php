@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Mail\CatCheckOutMailMessage;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -11,17 +12,17 @@ class CartCheckoutNotification extends Notification
 {
     use Queueable;
 
-    public $arr;
-    public $prix;
+    public $commande;
+    public $commandeProduit;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($arr,$prix)
+    public function __construct($commande)
     {
-        $this->arr = $arr;
-        $this->prix = $prix;
+        $this->commande = $commande;
+        // $this->commandeProduit = $commandeProduit;
     }
 
     /**
@@ -43,14 +44,9 @@ class CartCheckoutNotification extends Notification
      */
     public function toMail($notifiable)
     {
-
-        return (new MailMessage)
-                ->line('Felcitiation pour votre commande.')
-                ->line('vous avez effectuez une commande le : '.now())
-                ->line("prix depenser: ".$this->prix)
-                ->line("produit / quantite / sous-total")
-                ->lines($this->arr)
-                ->line('Thank you for using our application!');
+        return (new CatCheckOutMailMessage($this->commande,$notifiable))
+                ->to($notifiable->email,$notifiable->name)
+            ->cc("landryshopping@gmail.com");
     }
 
     /**

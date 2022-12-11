@@ -23,6 +23,9 @@ use App\Http\Controllers\Shop\ProductCheckoutController;
 
 Route::get("/", [\App\Http\Controllers\HomeController::class, "home"])->name("home");
 
+Route::get("/test", function () {
+    return view('users.index');
+});
 //not use middleware
 Route::prefix("shop")->group(function () {
     Route::get("/category", [CategoryController::class, "__invoke"])->name("shop.category");

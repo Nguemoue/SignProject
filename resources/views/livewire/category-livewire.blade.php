@@ -37,24 +37,23 @@
             <div class="filter-bar d-flex flex-wrap align-items-center">
 
                 <div class="sorting mr-auto">
-                        @if ($produits->links())
-                        <div class=" mx-auto w-75">
-                            {{ $produits->links() }}
-                        </div>
-                    @endif    
+                    <div class=" mx-auto w-75">
+                        {{ $produits->links() }}
+                    </div>
                 </div>
                 <div>
-                    <form action="#" onsubmit="return false">
-                    <div class="input-group filter-bar-search">
-                        <input wire:model.debounce.200="search" type="text" placeholder="Search">
-                        <div class="input-group-append">
-                            <button onclick="preventDefault()" wire:click.prevent="rechercher" type="button"><i class="ti-search"></i></button>
+                    <form action="#" wire:submit.prevent='rechercher' >
+                        <div class="input-group filter-bar-search">
+                            <input wire:model.defer="search" type="text" placeholder="Search">
+                            <div class="input-group-append">
+                                <button  type="submit"><i
+                                        class="ti-search"></i></button>
+                            </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
                 </div>
-                
-                
+
+
             </div>
             <!-- End Filter Bar -->
             <!-- Start Best Seller -->
@@ -67,11 +66,21 @@
                         <div class="col-md-6 col-lg-4">
                             <div class="card text-center card-product">
                                 <div class="card-product__img">
-                                    <img class="card-img" loading="lazing" lazy
-                                        src="{{ asset('storage/'.$produit->images[0]->photo) }}" alt="">
+                                    <img class="card-img" loading="lazing" 
+                                        src="{{ asset('storage/' . ($produit->images?->first()?->photo)  )}}" alt="image {{ $produit->nom }}"/>
                                     <ul class="card-product__imgOverlay">
-                                        <li><button><i class="ti-search"></i></button></li>
-                                        <li><button><i class="ti-shopping-cart"></i></button></li>
+                                        <li><a href="{{ route('shop.singleProduct', ['productId' => $produit->id]) }}">
+
+                                                <button><i class="ti-search"></i></button>
+                                            </a></li>
+                                        <li>
+                                            <form action="{{ route('cart.index') }}" method="POST">
+                                                @csrf
+                                                <input type="hidden" value="{{ $produit->id }}" name="produitId">
+                                                <input type="hidden" name="quantite" value="1" />
+                                                <button type="submit"><i class="ti-shopping-cart"></i></button>
+                                            </form>
+                                        </li>
                                         <li><button><i class="ti-heart"></i></button></li>
                                     </ul>
                                 </div>

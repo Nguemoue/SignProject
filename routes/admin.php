@@ -26,7 +26,7 @@ Route::group(
         'middleware' => ['auth:admin']
     ],
     function () {
-        Route::get('/', [AdminHomeController::class, "index"])->name("home")->withoutMiddleware("auth:admin");;
+        Route::get('/', [AdminHomeController::class, "index"])->name("home");
         Route::post("/profile/update", [AdminHomeController::class, "updateProfile"])->name("profile.update");
         Route::post("/password/update", [AdminHomeController::class, "updatepassword"])->name("password.update");
         Route::resource('users', AdminUserController::class);
