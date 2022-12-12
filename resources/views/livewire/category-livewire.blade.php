@@ -59,7 +59,7 @@
             <!-- Start Best Seller -->
             <section class="lattest-product-area pb-40 category-list">
                 <div class="row">
-                    <div class="text-danger  px-4 container" wire:loading>
+                    <div class="text-danger  px-4 container" wire:target='' wire:loading>
                         traitement en cours .....
                     </div>
                     @forelse ($produits as $produit)
@@ -81,7 +81,11 @@
                                                 <button type="submit"><i class="ti-shopping-cart"></i></button>
                                             </form>
                                         </li>
-                                        <li><button><i class="ti-heart"></i></button></li>
+                                        <li>
+                                            <button  wire:click="like({{ $produit->id}})" ><i 
+                                                @class(["ti-heart", "liked"=>$produit->isLiked(auth()->user()->id)])>
+                                            </i></button>
+                                        </li>
                                     </ul>
                                 </div>
                                 <div class="card-body">

@@ -37,6 +37,12 @@ class Produit extends Model
         return $this->hasMany(Comment::class);
     }
 
+    function likeProduits(){
+        return $this->hasMany(LikeProduit::class);
+    }
+    function isLiked($user_id){
+        return LikeProduit::query()->where('produit_id', $this->id)->where("user_id", "=", $user_id)->exists();
+    }
     protected $casts = [
         'prix'=>'float'
     ];

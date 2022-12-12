@@ -58,6 +58,14 @@
                 <span class="menu-title">Categorie Produit</span>
             </a>
         </li>
+        <li @class(['nav-item menu-items my-2', "active"=>Route::is('admin.commandes.*')])>
+            <a class="nav-link" href="{{ route('admin.commandes.index') }}">
+                <span class="menu-icon">
+                    <i class="mdi mdi-book"></i>
+                </span>
+                <span class="menu-title">Commandes</span>
+            </a>
+        </li>
 
         <li @class([
             'nav-item menu-items my-2',

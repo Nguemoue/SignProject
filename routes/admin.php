@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\CategorieProduitController as AdminCategorieProdu
 use App\Http\Controllers\Admin\CouleurProduitController ;
 use App\Http\Controllers\Admin\PhotoProduitController;
 use App\Http\Controllers\Admin\SpecificationController;
+use App\Http\Controllers\Admin\CommandeController as AdminCommandeController;
 use App\Models\PhotoProduit;
 use App\Models\Produit;
 
@@ -38,5 +39,9 @@ Route::group(
         Route::post("photoProduit/changePhoto",[PhotoProduitController::class,"changePhoto"])->name("photoProduit.changePhoto");
         Route::resource('blogs', AdminBlogController::class);
         Route::post("/produit/{produit}/specification",[SpecificationController::class,"update"])->name('produit.specification.update');
+        // route pour les commandes
+        Route::get("commandes", [AdminCommandeController::class, "index"])->name("commandes.index");
+        Route::get("user/{user}/commande/{commande}/details", [AdminCommandeController::class, "details"])
+            ->name("user.commande.details");
     }
 );

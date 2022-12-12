@@ -68,11 +68,11 @@
                                         @endphp
                                         {{ $sessionNumber }} </span></button></a> </li>
 
-                        @auth('admin')
-                            <li @class(['nav-item', 'active' => Route::is('admin.home')])><a class="button active button-header"
-                                    href="{{ route('shop.checkout') }}">Administration</a></li>
-                        @endauth
-                    </ul>
+                        @if(auth('admin')->check() )
+                        <li @class(['nav-item', 'active' => Route::is('admin.home')])><a class="button active button-header"
+                                href="{{ route('shop.checkout') }}">Administration</a></li>
+                        @endif
+                            </ul>
                 </div>
             </div>
         </nav>

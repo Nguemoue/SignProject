@@ -18,7 +18,7 @@ class CategorieProduitController extends Controller
      */
     public function index()
     {
-        $categorieProduits = CategorieProduit::all();
+        $categorieProduits = CategorieProduit::query()->orderBy("created_at","desc")->get();
         return view("admin.categorie_produits.index", compact('categorieProduits'));
     }
 
@@ -51,6 +51,18 @@ class CategorieProduitController extends Controller
         // je traite l'image coupe
         $stream = DecryptBase64File::decrypt($request->input("imageHidden"));
         $filename = "categorie_produits/". $stream->name;
+        
+        //je sotcke mon objet en base de donnees 
+        CategorieProduit::query()->create([
+            "nom"=>$request->input("nom"),
+            "description"=>$request->input("description"),
+            "image"=>$filename
+        ]);
+        // je sotcke mon image dans le repertoire
+        Storage::put($filename,$stream->content);
+        // je redirige l'admin vers la page d'index des categories
+        return redirect()->route("admin.categorieProduit.index")->with("success", "votre categorie a bien ete creer");
+
     }
 
     /**
@@ -113,6 +125,7 @@ class CategorieProduitController extends Controller
             Storage::delete($item->image);
         $item->description = $request->input("description");
         $item->image = $filename;
+        $item->updated_at = now();
         $item->save();
         // j'enregistre l'image dans son repertoire
         Storage::put($filename,$stream->content);

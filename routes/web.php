@@ -6,6 +6,7 @@ use App\Http\Controllers\Blog\BlogController;
 use App\Http\Controllers\Shop\CartController;
 use App\Http\Controllers\Shop\CategoryController;
 use App\Http\Controllers\Blog\SingleBlogController;
+use App\Http\Controllers\ProduitLikeController;
 use App\Http\Controllers\Shop\ConfirmationController;
 use App\Http\Controllers\Shop\SingleProductController;
 use App\Http\Controllers\Shop\ProductCheckoutController;
@@ -39,6 +40,9 @@ Route::group([
     // home route
     Route::get("/dashboard", [\App\Http\Controllers\HomeController::class, "dashboard"])->name("dashboard");
 
+    // like de produit
+
+    Route::post("produit/{produit}/like", [ProduitLikeController::class, "like"])->name("produit.like");
     //shop routes
     Route::prefix("shop")->group(function () {
         Route::get("/checkout", [ProductCheckoutController::class, "__invoke"])->name("shop.checkout");

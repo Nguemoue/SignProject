@@ -1,7 +1,7 @@
-@extends("template")
+@extends('template')
 
-@section("main")
-     <!--================ Hero banner start =================-->
+@section('main')
+    <!--================ Hero banner start =================-->
     <section class="hero-banner">
         <div class="container">
             <div class="row no-gutters align-items-center pt-60px">
@@ -28,27 +28,16 @@
     <!--================ Hero Carousel start =================-->
     <section class="section-margin mt-0">
         <div class="owl-carousel owl-theme hero-carousel">
-            <div class="hero-carousel__slide">
-                <img src="img/home/hero-slide1.png" alt="" class="img-fluid">
-                <a href="#" class="hero-carousel__slideOverlay">
-                    <h3>Wireless Headphone</h3>
-                    <p>Accessories Item</p>
-                </a>
-            </div>
-            <div class="hero-carousel__slide">
-                <img src="img/home/hero-slide2.png" alt="" class="img-fluid">
-                <a href="#" class="hero-carousel__slideOverlay">
-                    <h3>Wireless Headphone</h3>
-                    <p>Accessories Item</p>
-                </a>
-            </div>
-            <div class="hero-carousel__slide">
-                <img src="img/home/hero-slide3.png" alt="" class="img-fluid">
-                <a href="#" class="hero-carousel__slideOverlay">
-                    <h3>Wireless Headphone</h3>
-                    <p>Accessories Item</p>
-                </a>
-            </div>
+            @foreach ($categories as $cat)
+                <div class="hero-carousel__slide">
+                    <img src="{{ asset('storage/' . $cat->image) }}" alt="categorie {{ $cat->nom }}" class="img-fluid">
+                    <a href="#" class="hero-carousel__slideOverlay">
+                        <h3>{{ $cat->nom }}</h3>
+                        <p>{{ $cat->description }}</p>
+                    </a>
+                </div>
+            @endforeach
+
         </div>
     </section>
     <!--================ Hero Carousel end =================-->
@@ -61,146 +50,41 @@
                 <h2>Trending <span class="section-intro__style">Product</span></h2>
             </div>
             <div class="row">
-                <div class="col-md-6 col-lg-4 col-xl-3">
-                    <div class="card text-center card-product">
-                        <div class="card-product__img">
-                            <img class="card-img" src="img/product/product1.png" alt="">
-                            <ul class="card-product__imgOverlay">
-                                <li><button><i class="ti-search"></i></button></li>
-                                <li><button><i class="ti-shopping-cart"></i></button></li>
-                                <li><button><i class="ti-heart"></i></button></li>
-                            </ul>
-                        </div>
-                        <div class="card-body">
-                            <p>Accessories</p>
-                            <h4 class="card-product__title"><a href="single-product.html">Quartz Belt Watch</a>
-                            </h4>
-                            <p class="card-product__price">$150.00</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4 col-xl-3">
-                    <div class="card text-center card-product">
-                        <div class="card-product__img">
-                            <img class="card-img" src="img/product/product2.png" alt="">
-                            <ul class="card-product__imgOverlay">
-                                <li><button><i class="ti-search"></i></button></li>
-                                <li><button><i class="ti-shopping-cart"></i></button></li>
-                                <li><button><i class="ti-heart"></i></button></li>
-                            </ul>
-                        </div>
-                        <div class="card-body">
-                            <p>Beauty</p>
-                            <h4 class="card-product__title"><a href="single-product.html">Women Freshwash</a></h4>
-                            <p class="card-product__price">$150.00</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4 col-xl-3">
-                    <div class="card text-center card-product">
-                        <div class="card-product__img">
-                            <img class="card-img" src="img/product/product3.png" alt="">
-                            <ul class="card-product__imgOverlay">
-                                <li><button><i class="ti-search"></i></button></li>
-                                <li><button><i class="ti-shopping-cart"></i></button></li>
-                                <li><button><i class="ti-heart"></i></button></li>
-                            </ul>
-                        </div>
-                        <div class="card-body">
-                            <p>Decor</p>
-                            <h4 class="card-product__title"><a href="single-product.html">Room Flash Light</a>
-                            </h4>
-                            <p class="card-product__price">$150.00</p>
+                @foreach ($mostLiked as $item)
+                    <div class="col-md-6 col-lg-4 col-xl-3">
+                        <div class="card text-center card-product">
+                            <div class="card-product__img">
+                                <img class="card-img" src="{{ asset('storage/' . $item->images?->first()?->photo) }}"
+                                    alt="image {{ $item->nom }}">
+                                <ul class="card-product__imgOverlay">
+                                    <li>
+                                        <a href="{{ route('shop.singleProduct', ['productId' => $item->id]) }}">
+                                            <button><i class="ti-search"></i></button>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <form action="{{ route('cart.index') }}" method="POST">
+                                            @csrf
+                                            <input type="hidden" value="{{ $item->id }}" name="produitId">
+                                            <input type="hidden" name="quantite" value="1" />
+                                            <button type="submit"><i class="ti-shopping-cart"></i></button>
+                                        </form>
+                                    </li>
+                                    <li>
+                                        <button><i @class(['ti-heart'])></i></button>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="card-body">
+                                <p>{{ $item->categorie?->nom }}</p>
+                                <h4 class="card-product__title"><a href="single-product.html">{{ $item->nom }}</a>
+                                </h4>
+                                <p class="card-product__price">{{ $item->prix }} Eur</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-6 col-lg-4 col-xl-3">
-                    <div class="card text-center card-product">
-                        <div class="card-product__img">
-                            <img class="card-img" src="img/product/product4.png" alt="">
-                            <ul class="card-product__imgOverlay">
-                                <li><button><i class="ti-search"></i></button></li>
-                                <li><button><i class="ti-shopping-cart"></i></button></li>
-                                <li><button><i class="ti-heart"></i></button></li>
-                            </ul>
-                        </div>
-                        <div class="card-body">
-                            <p>Decor</p>
-                            <h4 class="card-product__title"><a href="single-product.html">Room Flash Light</a>
-                            </h4>
-                            <p class="card-product__price">$150.00</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4 col-xl-3">
-                    <div class="card text-center card-product">
-                        <div class="card-product__img">
-                            <img class="card-img" src="img/product/product5.png" alt="">
-                            <ul class="card-product__imgOverlay">
-                                <li><button><i class="ti-search"></i></button></li>
-                                <li><button><i class="ti-shopping-cart"></i></button></li>
-                                <li><button><i class="ti-heart"></i></button></li>
-                            </ul>
-                        </div>
-                        <div class="card-body">
-                            <p>Accessories</p>
-                            <h4 class="card-product__title"><a href="single-product.html">Man Office Bag</a></h4>
-                            <p class="card-product__price">$150.00</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4 col-xl-3">
-                    <div class="card text-center card-product">
-                        <div class="card-product__img">
-                            <img class="card-img" src="img/product/product6.png" alt="">
-                            <ul class="card-product__imgOverlay">
-                                <li><button><i class="ti-search"></i></button></li>
-                                <li><button><i class="ti-shopping-cart"></i></button></li>
-                                <li><button><i class="ti-heart"></i></button></li>
-                            </ul>
-                        </div>
-                        <div class="card-body">
-                            <p>Kids Toy</p>
-                            <h4 class="card-product__title"><a href="single-product.html">Charging Car</a></h4>
-                            <p class="card-product__price">$150.00</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4 col-xl-3">
-                    <div class="card text-center card-product">
-                        <div class="card-product__img">
-                            <img class="card-img" src="img/product/product7.png" alt="">
-                            <ul class="card-product__imgOverlay">
-                                <li><button><i class="ti-search"></i></button></li>
-                                <li><button><i class="ti-shopping-cart"></i></button></li>
-                                <li><button><i class="ti-heart"></i></button></li>
-                            </ul>
-                        </div>
-                        <div class="card-body">
-                            <p>Accessories</p>
-                            <h4 class="card-product__title"><a href="single-product.html">Blutooth Speaker</a>
-                            </h4>
-                            <p class="card-product__price">$150.00</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4 col-xl-3">
-                    <div class="card text-center card-product">
-                        <div class="card-product__img">
-                            <img class="card-img" src="img/product/product8.png" alt="">
-                            <ul class="card-product__imgOverlay">
-                                <li><button><i class="ti-search"></i></button></li>
-                                <li><button><i class="ti-shopping-cart"></i></button></li>
-                                <li><button><i class="ti-heart"></i></button></li>
-                            </ul>
-                        </div>
-                        <div class="card-body">
-                            <p>Kids Toy</p>
-                            <h4 class="card-product__title"><a href="#">Charging Car</a></h4>
-                            <p class="card-product__price">$150.00</p>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
+
             </div>
         </div>
     </section>
@@ -208,8 +92,8 @@
 
 
     <!-- ================ offer section start ================= -->
-    <section class="offer" id="parallax-1" data-anchor-target="#parallax-1"
-        data-300-top="background-position: 20px 30px" data-top-bottom="background-position: 0 20px">
+    <section class="offer" id="parallax-1" data-anchor-target="#parallax-1" data-300-top="background-position: 20px 30px"
+        data-top-bottom="background-position: 0 20px">
         <div class="container">
             <div class="row">
                 <div class="col-xl-5">

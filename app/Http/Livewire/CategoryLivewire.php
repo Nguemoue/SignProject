@@ -8,6 +8,7 @@ use Livewire\WithPagination;
 use App\Models\MarqueProduit;
 use App\Models\CouleurProduit;
 use App\Models\CategorieProduit;
+use App\Models\LikeProduit;
 
 class CategoryLivewire extends Component
 {
@@ -45,7 +46,19 @@ class CategoryLivewire extends Component
             'produits'=>$produits,
         ]);
     }
-    
+
+    function like($idProduit){
+        $isLiked = LikeProduit::query()->where("user_id", '=', auth()->user()->id)->where("produit_id", '=', $idProduit)->exists();
+        if($isLiked){
+            LikeProduit::query()->where('user_id', '=', auth()->user()->id)->where('produit_id', '=', $idProduit)->delete();
+        }else{
+            LikeProduit::query()->create([
+                'produit_id'=>$idProduit,
+                'user_id'=>auth()->user()->id
+            ]);
+        }
+
+    }
     public function rechercher(){
         // operation lors de la recherche
 
