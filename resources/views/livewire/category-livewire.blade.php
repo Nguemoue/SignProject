@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-xl-3 col-lg-4 col-md-5">
             <div class="sidebar-categories " style="max-height: 70vh;overflow-y:scroll">
-                <div class="head position-sticky">Browse Categories</div>
+                <div class="head position-sticky">Categories</div>
                 <ul class="main-categories">
                     <li class="common-filter">
                         <form action="#">
@@ -32,15 +32,10 @@
                 </ul>
             </div>
         </div>
-        <div class="col-xl-9 col-lg-8 col-md-7" style="max-height:80vh;overflow-y:scroll">
+        <div class="col-xl-9 col-lg-8 col-md-7" >
             <!-- Start Filter Bar -->
             <div class="filter-bar d-flex flex-wrap align-items-center">
 
-                <div class="sorting mr-auto">
-                    <div class=" mx-auto w-75">
-                        {{ $produits->links() }}
-                    </div>
-                </div>
                 <div>
                     <form action="#" wire:submit.prevent='rechercher' >
                         <div class="input-group filter-bar-search">
@@ -63,7 +58,7 @@
                         traitement en cours .....
                     </div>
                     @forelse ($produits as $produit)
-                        <div class="col-md-6 col-lg-4">
+                        <div class="col-md-4 col-lg-4">
                             <div class="card text-center card-product">
                                 <div class="card-product__img">
                                     <img class="card-img" loading="lazing" 
@@ -81,11 +76,14 @@
                                                 <button type="submit"><i class="ti-shopping-cart"></i></button>
                                             </form>
                                         </li>
+                                        @auth
+                                            
                                         <li>
                                             <button  wire:click="like({{ $produit->id}})" ><i 
                                                 @class(["ti-heart", "liked"=>$produit->isLiked(auth()->user()->id)])>
                                             </i></button>
                                         </li>
+                                        @endauth
                                     </ul>
                                 </div>
                                 <div class="card-body">
@@ -103,7 +101,10 @@
                         </div>
                     @endforelse
                 </div>
+                <div class="card-footer">
+                        {{ $produits->links() }}
 
+                </div>
             </section>
             <!-- End Best Seller -->
         </div>

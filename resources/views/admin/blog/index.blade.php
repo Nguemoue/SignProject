@@ -3,7 +3,7 @@
 @section('main')
     <h1 class="text-center">Les blogs</h1>
     <div class="float-right d-flex justify-content-around mb-3 border p-2 btn-link btn btn-light">
-        <a href="{{ route('admin.blogCat.index') }}">gerer les categorie</a>
+        <a href="{{ route('admin.blogCategorie.index') }}">gerer les categorie</a>
     </div>
     &nbsp;
     <div class="float-right d-flex justify-content-around mb-3 border p-2 btn-link btn btn-light">
@@ -29,9 +29,9 @@
                     <tr>
                         <td>{{ $loop->index + 1 }}</td>
                         <td> {{ $blog->titre }} </td>
-                        <td><img src="{{asset('storage/'.$blog->photo)}}" style="border-radius: 0;transform: scale(2) translateX(50%);" class="card d-block border"  alt=""></td>
+                        <td><img src="{{asset('storage/'.$blog->image)}}" style="border-radius: 0;transform: scale(2) translateX(50%);" class="card d-block border"  alt=""></td>
                         <td>{{$blog->titre}}</td>
-						<td>{{ Str::words($blog->content??"Non definie",2) }}</td>
+						<td>{{ Str::words($blog->contenu??"Non definie",2) }}</td>
                         <td> {{ $blog->created_at->Format("d M y") }} </td>
                         <td>
                             <div class="btn-group">
@@ -54,37 +54,3 @@
         </table>
     </div>
 @endsection
-
-
-@push('styles')
-    <link rel="stylesheet" href="{{ asset('css/toastr.css') }}">
-@endpush
-@push('scripts')
-
-    @if (session()->has('messages.info'))
-        <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/toastr.js') }}"></script>
-        <script>
-            toastr.options = {
-                "closeButton": true,
-                "debug": false,
-                "newestOnTop": false,
-                "progressBar": true,
-                "rtl": false,
-                "positionClass": "toast-top-full-width",
-                "prblogDuplicates": false,
-                "onclick": null,
-                "showDuration": 300,
-                "hideDuration": 1000,
-                "timeOut": 5000,
-                "extendedTimeOut": 1000,
-                "showEasing": "swing",
-                "hideEasing": "linear",
-                "showMethod": "fadeIn",
-                "hideMethod": "fadeOut"
-            }
-            toastr["info"](`{{ session("messages.info")  }}`,"Information")
-        </script>
-    @endif
-
-@endpush

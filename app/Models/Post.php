@@ -10,7 +10,7 @@ class Post extends Model
     use HasFactory;
 
     protected $fillable = [
-
+        "titre","sousTitre","contenu","administrateur_id","image","categorie_post_id"
     ];
 
     protected $casts = [
@@ -18,15 +18,18 @@ class Post extends Model
     ];
 
     function tags(){
-        return $this->hasMany(Tag::class);
+        return $this->belongsToMany(Tag::class,'post_tags');
     }
     function comments(){
         return $this->hasMany(Comment::class);
    }
     function resource(){
-        return $this->hasOne(RessourcePost::class,'produit_id');
+        return $this->hasOne(RessourcePost::class,'post_id');
     }
     function categorie(){
-        return $this->belongsTo(CategoriePost::class,'categorie_post_id');
+        return $this->belongsTo(CategoriePost::class,'categorie_post_id')->withDefault([
+            'nom'=>'',
+            'description'=>''
+        ]);
     }
 }

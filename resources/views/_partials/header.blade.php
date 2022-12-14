@@ -12,21 +12,12 @@
                 </button>
                 <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
                     <ul class="nav navbar-nav menu_nav ml-auto mr-auto">
-                        <li @class(['nav-item', 'active' => Route::is('home')])><a class="nav-link" href="{{ route('home') }}">Home</a></li>
+                        <li @class(['nav-item', 'active' => Route::is('home')])><a class="nav-link" href="{{ route('home') }}">Accueil</a></li>
                         <li @class(['nav-item', 'active' => Route::is('shop.*')])>
-                            <a href="{{ route('shop.category') }}" class="nav-link">Shop</a>
+                            <a href="{{ route('shop.category') }}" class="nav-link">Boutique</a>
                         </li>
-                        <li @class(['nav-item submenu dropdown', 'active' => Route::is('blog.*')])>
-                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
-                                aria-haspopup="true" aria-expanded="false">Blog</a>
-                            <ul class="dropdown-menu">
-                                <li @class(['nav-item', 'active' => Route::is('blog.index')])><a class="nav-link"
+                        <li @class(['nav-item', 'active' => Route::is('blog.index')])><a class="nav-link"
                                         href="{{ route('blog.index') }}">Blog</a></li>
-                                <li @class(['nav-item', 'active' => Route::is('blog.singleBlog')])><a class="nav-link"
-                                        href="{{ route('blog.singleBlog', ['blogId' => 1]) }}">Blog Details</a>
-                                </li>
-                            </ul>
-                        </li>
                         <li @class(['nav-item', 'active' => Route::is('contact')])><a class="nav-link" href="{{ route('contact') }}">Contact</a>
                         </li>
                     </ul>

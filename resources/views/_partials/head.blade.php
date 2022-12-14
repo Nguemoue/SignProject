@@ -9,7 +9,6 @@
 <!-- Core theme CSS (includes Bootstrap)-->
 {{-- <link href="{{ asset('css/styles.css') }}" rel="stylesheet" /> --}}
 {{-- <link rel="stylesheet" href="{{ asset('mdi/css/materialdesignicons.min.css') }}"> --}}
-<link rel="icon" href="img/Fevicon.png" type="image/png">
 <link rel="stylesheet" href="{{ asset('vendors/bootstrap/bootstrap.min.css') }}">
 <link rel="stylesheet" href="{{ asset('vendors/fontawesome/css/all.min.css') }}}}">
 <link rel="stylesheet" href="{{ asset('vendors/themify-icons/themify-icons.css') }}">

@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class RessourcePost extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'type',
+        'contenu',
+        'post_id'
+    ];
 }

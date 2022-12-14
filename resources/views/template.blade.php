@@ -5,6 +5,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @includeIf('_partials.head')
     @livewireStyles()
+    @livewireScripts()
+
     @stack("styles")
 </head>
 
@@ -22,7 +24,6 @@
     @includeIf('_partials.script')
     @includeIf('_partials.swal')
     @stack("scripts")
-    @livewireScripts()
 </body>
 
 </html>

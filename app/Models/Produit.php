@@ -22,7 +22,11 @@ class Produit extends Model
         ]);
     }
     function categorie(){
-        return $this->belongsTo(CategorieProduit::class,'categorie_produit_id');
+        return $this->belongsTo(CategorieProduit::class,'categorie_produit_id')->withDefault([
+            'nom'=>'',
+            'description'=>'aucune',
+            'image'=>''
+        ]);
     }
 
     function marque(){

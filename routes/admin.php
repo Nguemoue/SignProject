@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\CouleurProduitController ;
 use App\Http\Controllers\Admin\PhotoProduitController;
 use App\Http\Controllers\Admin\SpecificationController;
 use App\Http\Controllers\Admin\CommandeController as AdminCommandeController;
+use App\Http\Controllers\Admin\CategorieBlogController as AdminCategorieBlogController;
 use App\Models\PhotoProduit;
 use App\Models\Produit;
 
@@ -38,6 +39,7 @@ Route::group(
         Route::resource('couleurProduit',CouleurProduitController::class)->except('create','edit','show','index');
         Route::post("photoProduit/changePhoto",[PhotoProduitController::class,"changePhoto"])->name("photoProduit.changePhoto");
         Route::resource('blogs', AdminBlogController::class);
+        Route::resource("blogCategorie", AdminCategorieBlogController::class);
         Route::post("/produit/{produit}/specification",[SpecificationController::class,"update"])->name('produit.specification.update');
         // route pour les commandes
         Route::get("commandes", [AdminCommandeController::class, "index"])->name("commandes.index");

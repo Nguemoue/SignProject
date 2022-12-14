@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CategorieProduit;
+use App\Models\Post;
 use App\Models\Produit;
 use Illuminate\Http\Request;
 
@@ -14,8 +15,15 @@ class HomeController extends Controller
         ->selectRaw("count(produit_id) as nb_like")->addSelect("produits.id","produits.nom","produits.prix")
         ->orderBy("nb_like","desc")
         ->take(8)->get();
+        
+        $mostSell = Produit::query()->join("commande_produits","commande_produits.produit_id","=","produits.id")->groupBy("produit_id","produits.id", "produits.nom", "produits.prix")
+        ->selectRaw("count(produit_id) as nb_sell ")->addSelect("produits.id", "produits.nom", "produits.prix")
+        ->orderBy("nb_sell","desc")->take(8)->get();
+        
+        $latestBlogs = Post::query()->orderBy("id", "desc")->take(3)->get();
+        // dd($mostSell);
         // dd($mostLiked);
-        return view('welcome',compact('categories','mostLiked'));
+        return view('welcome',compact('categories','mostLiked','mostSell',"latestBlogs"));
     }
 
     function acceuil(){

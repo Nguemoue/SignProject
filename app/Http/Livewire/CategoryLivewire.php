@@ -13,7 +13,8 @@ use App\Models\LikeProduit;
 class CategoryLivewire extends Component
 {
     use WithPagination;
-    const PER_PAGE = 10;
+    protected $paginationTheme = "bootstrap";
+    const PER_PAGE = 20;
     public $search = '';
     public $colors = [];
     public $nbProduits = 0;
@@ -23,6 +24,12 @@ class CategoryLivewire extends Component
     }
     public $categories = [];
     public $categorie = '';
+
+    protected $queryString = [
+        'categorie'=>[
+            'except'=>''
+        ]
+    ];
     
     function setCategorie($cat){
         $this->resetPage();
@@ -33,7 +40,7 @@ class CategoryLivewire extends Component
     public function render()
     {
         $search = $this->search;
-        $produits = Produit::query()->with('categorie')
+        $produits = Produit::query()->with('categorie')->orderBy("id","desc")
             ->when($this->categorie, function ($query) {
                 return $query->join("categorie_produits", "produits.categorie_produit_id", "=", "categorie_produits.id")->where("categorie_produits.nom", "like", $this->categorie)
                     ->select("produits.*");
