@@ -12,12 +12,11 @@
                 </div>
                 <div class="col-sm-7 col-lg-6 offset-lg-1 pl-4 pl-md-5 pl-lg-0">
                     <div class="hero-banner__content">
-                        <h4>Shop is fun</h4>
-                        <h1>Browse Our Premium Product</h1>
-                        <p>Us which over of signs divide dominion deep fill bring they're meat beho upon own earth
-                            without morning over third. Their male dry. They are great appear whose land fly grass.
+                        <h4>Bienvenu Chez Flored's SHOP</h4>
+                        <h1>PARCOUREZ NOS PRODUITS PREMIUM</h1>
+                        <p>Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.
                         </p>
-                        <a class="button button-hero" href="{{ route('shop.category') }}">Browse Now</a>
+                        <a class="button button-hero" href="{{ route('shop.category') }}">Parcourir Maintenant</a>
                     </div>
                 </div>
             </div>
@@ -46,8 +45,8 @@
     <section class="section-margin calc-60px">
         <div class="container">
             <div class="section-intro pb-60px">
-                <p>Popular Item in the market</p>
-                <h2>Trending <span class="section-intro__style">Product</span></h2>
+                <p>Article populaire sur le marché</p>
+                <h2>Produit <span class="section-intro__style">Tendance</span></h2>
             </div>
             <div class="row">
                 @foreach ($mostLiked as $item)
@@ -98,10 +97,10 @@
             <div class="row">
                 <div class="col-xl-5">
                     <div class="offer__content text-center">
-                        <h3>Up To 50% Off</h3>
-                        <h4>Winter Sale</h4>
-                        <p>Him she'd let them sixth saw light</p>
-                        <a class="button button--active mt-3 mt-xl-4" href="#">Shop Now</a>
+                        <h3>Jusqu'à 50% en ,oins</h3>
+                        <h4>Soldes d’hiver</h4>
+                        <p>Celui qu’elle les avait laissés sixième a vu la lumière</p>
+                        <a class="button button--active mt-3 mt-xl-4" href="#">Acheter maintenant</a>
                     </div>
                 </div>
             </div>
@@ -113,8 +112,8 @@
     <section class="section-margin calc-60px">
         <div class="container">
             <div class="section-intro pb-60px">
-                <p>Popular Item in the market</p>
-                <h2>Best <span class="section-intro__style">Sellers</span></h2>
+                <p>Article populaire sur le marché</p>
+                <h2>Meilleures <span class="section-intro__style">Ventes</span></h2>
             </div>
             <div class="owl-carousel owl-theme" id="bestSellerCarousel">
                 @foreach ($mostSell as $item)
@@ -156,8 +155,8 @@
     <section class="blog">
         <div class="container">
             <div class="section-intro pb-60px">
-                <p>Popular Item in the market</p>
-                <h2>Latest <span class="section-intro__style">News</span></h2>
+                <p>Actualités</p>
+                <h2>Dernières <span class="section-intro__style">Nouvelles</span></h2>
             </div>
 
             <div class="row">

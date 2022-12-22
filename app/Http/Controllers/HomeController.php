@@ -30,6 +30,7 @@ class HomeController extends Controller
         return view('acceuil');
     }
     function dashboard(){
+        
         return view("dashboard");
     }
 }

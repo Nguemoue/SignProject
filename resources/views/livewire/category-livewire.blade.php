@@ -39,7 +39,7 @@
                 <div>
                     <form action="#" wire:submit.prevent='rechercher' >
                         <div class="input-group filter-bar-search">
-                            <input wire:model.defer="search" type="text" placeholder="Search">
+                            <input wire:model.debounce.4000="search" type="text" placeholder="Search">
                             <div class="input-group-append">
                                 <button  type="submit"><i
                                         class="ti-search"></i></button>
@@ -54,8 +54,8 @@
             <!-- Start Best Seller -->
             <section class="lattest-product-area pb-40 category-list">
                 <div class="row">
-                    <div class="text-danger  px-4 container" wire:target='' wire:loading>
-                        traitement en cours .....
+                    <div class="text-danger mx-auto  p-2 container" wire:target='search'  wire:loading>
+                        Recherche des elements en cours .....
                     </div>
                     @forelse ($produits as $produit)
                         <div class="col-md-4 col-lg-4">
@@ -101,10 +101,11 @@
                         </div>
                     @endforelse
                 </div>
-                <div class="card-footer">
-                        {{ $produits->links() }}
-
-                </div>
+                @if($produits->links())
+                    <div class="card-footer">
+                            {{ $produits->links() }}
+                    </div>
+                @endif
             </section>
             <!-- End Best Seller -->
         </div>

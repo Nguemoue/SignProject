@@ -53,7 +53,10 @@
                 </div>
                 <div class="modal-body">
                     <label for="editPhotoField">Cop Image.</label>
-                    <img src="" class="w-100" id="cropImage" alt="image">
+                    <div class="w-100 mx-auto text-center">
+                        <img src="" class="mx-auto" id="cropImage" alt="image">
+
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" id="cropButton" class="btn btn-success">crop</button>
@@ -101,7 +104,9 @@
         cropPhotoElement.addEventListener('show.bs.modal', function() {
             cropper = new Cropper(image, {
                 aspectRatio: 1,
-                viewMode: 3,
+                viewMode: 0,
+                zoomable:true,
+                zoomOnWheel:true,
                 preview: '.preview'
             });
         });

@@ -52,7 +52,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne(Adresse::class)->withDefault([
             'pays'=>'Canada',
             'quartier'=>'re 23 ',
-            'boitePoste'=>'bp 102',
+            'boitePostal'=>'bp 102',
             'ville'=>'quebec',
             'zip'=>'03',
             'district'=>'muschingana',

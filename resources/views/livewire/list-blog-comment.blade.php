@@ -3,7 +3,7 @@
     <div class="comment-list" id="commentList" style="max-height: 40vh;overflow-y: scroll">
         @foreach ($comments as $comment)
             <div class="single-comment border my-1 justify-content-between d-flex">
-                <div class="user mt-2 justify-content-between d-flex">
+                <div class="user p-2 mt-2 justify-content-between d-flex">
                     <div class="desc">
                         <h5>
                             <a href="#">{{ $comment->user->name }}</a>

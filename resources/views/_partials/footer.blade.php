@@ -19,10 +19,10 @@
                      <div class="single-footer-widget tp_widgets">
                          <h4 class="footer_title">Liens Rapides</h4>
                          <ul class="list">
-                             <li><a href="#">Accueil</a></li>
-                             <li><a href="#">Boutique</a></li>
-                             <li><a href="#">Blog</a></li>
-                             <li><a href="#">Contact</a></li>
+                             <li><a href="{{ route('home') }}">Accueil</a></li>
+                             <li><a href="{{ route('shop.category') }}">Boutique</a></li>
+                             <li><a href="{{ route('blog.index') }}">Actualités</a></li>
+                             <li><a href="{{ route('contact') }}">Contact</a></li>
                          </ul>
                      </div>
                  </div>

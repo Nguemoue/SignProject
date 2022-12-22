@@ -22,14 +22,15 @@
 
 
     <!--================Blog Area =================-->
-    <section  class="blog_area single-post-area py-80px section-margin--small">
+    <section class="blog_area single-post-area py-80px section-margin--small">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 posts-list">
                     <div class="single-post row">
                         <div class="col-lg-12">
                             <div class="feature-img">
-                                <img class="img-fluid" src="{{ asset('storage/'.$blog->image) }}" alt="image {{ $blog->titre }}">
+                                <img class="img-fluid" src="{{ asset('storage/' . $blog->image) }}"
+                                    alt="image {{ $blog->titre }}">
                             </div>
                         </div>
                         <div class="col-lg-3  col-md-3">
@@ -86,7 +87,30 @@
                     <hr>
                     {{-- bloc des commentaires --}}
                     <div class="comments-area">
-                        @livewire('list-blog-comment', ['blog' => $blog])
+                        <div class="comments-area">
+                            @php
+                            $comments = $blog->comments;
+                            @endphp
+                            <h4><span id="nbComment2">{{ $comments->count() }}</span> Commentaires</h4>
+                            <div class="comment-list" id="commentList" style="max-height: 40vh;overflow-y: scroll">
+                                @foreach ($comments as $comment)
+                                    <div class="single-comment border my-1 justify-content-between d-flex">
+                                        <div class="user p-2 mt-2 justify-content-between d-flex">
+                                            <div class="desc">
+                                                <h5>
+                                                    <a href="#">{{ $comment->user->name }}</a>
+                                                </h5>
+                                                <p class="date">{{ $comment->created_at->IsoFormat('lll') }} </p>
+                                                <p class="comment">
+                                                    {{ $comment->contenu }}
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
                     </div>
                     @auth
                         @php
@@ -109,11 +133,11 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <textarea class="form-control mb-10" id="message" rows="5" name="message" placeholder="Messege"
-                                        onfocus="this.placeholder = ''" onblur="this.placeholder = 'Messege'" required=""></textarea>
+                                    <textarea class="form-control mb-10" id="message" rows="5" name="message" placeholder="Message"
+                                        onfocus="this.placeholder = ''" onblur="this.placeholder = 'Message'" required=""></textarea>
                                 </div>
-                                <a href="#" id="postComment" class="button button-postComment button--active">Post
-                                    Comment</a>
+                                <a href="#nbComment2" id="postComment" class="button button-postComment button--active">
+                                    Commenter ce post</a>
                             </form>
                         </div>
                     @endauth
@@ -258,10 +282,10 @@
                 // Live
                 commentCountSpan.textContent = data.nbComment
                 comment = JSON.parse(data.comment)[0]
-                $("nbComment2").val(data.nbComment)
+                document.getElementById("nbComment2").textContent = data.nbComment
                 // console.log(comment)
                 var component = `
-                    <div class="single-comment border my-1 justify-content-between d-flex">
+                    <div class="single-comment p-2 border my-1 justify-content-between d-flex">
                         <div class="user mt-2 justify-content-between d-flex">
                             <div class="desc">
                                 <h5>

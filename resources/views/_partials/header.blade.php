@@ -16,8 +16,8 @@
                         <li @class(['nav-item', 'active' => Route::is('shop.*')])>
                             <a href="{{ route('shop.category') }}" class="nav-link">Boutique</a>
                         </li>
-                        <li @class(['nav-item', 'active' => Route::is('blog.index')])><a class="nav-link"
-                                        href="{{ route('blog.index') }}">Blog</a></li>
+                        <li @class(['nav-item', 'active' => Route::is('blog.*')])><a class="nav-link"
+                                        href="{{ route('blog.index') }}">Actualités</a></li>
                         <li @class(['nav-item', 'active' => Route::is('contact')])><a class="nav-link" href="{{ route('contact') }}">Contact</a>
                         </li>
                     </ul>
